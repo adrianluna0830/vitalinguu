@@ -14,6 +14,7 @@ import 'package:vitalinguu/exercise/exercise_view/domain/exercise_prompt_data.da
 import 'package:vitalinguu/core/domain/interfaces/i_ai.dart';
 import 'package:vitalinguu/exercise/exercise_view/domain/exercise_state.dart';
 import 'package:vitalinguu/exercise/exercise_view/domain/translation_state.dart';
+import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_chat_dialog.dart';
 import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_widgets/dialog_exercise.dart';
 import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_widgets/fill_the_blank_exercise.dart';
 import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_widgets/match_elements_exercise.dart';
@@ -42,6 +43,7 @@ part 'evaluators/write/write_exercise_prompt.dart';
 part 'evaluators/write_list/write_list_exercise_schema.dart';
 part 'evaluators/write_list/write_list_exercise_evaluator_mixin.dart';
 part 'evaluators/write_list/write_list_exercise_prompt.dart';
+part 'chat_helper_mixin.dart';
 
 const _translationSystemInstruction = '''
 You are a precise translation engine for a language-learning application.
@@ -125,6 +127,7 @@ class ExerciseViewModel
         AIErrorRetryMixin,
         TextToSpeechErrorRetryMixin,
         ExerciseViewModelStateMixin,
+        ChatHelperMixin,
         DialogExerciseEvaluatorMixin,
         FillTheBlankExerciseEvaluatorMixin,
         MatchElementsExerciseEvaluatorMixin,

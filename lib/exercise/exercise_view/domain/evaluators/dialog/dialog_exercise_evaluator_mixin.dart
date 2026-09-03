@@ -130,7 +130,7 @@ mixin DialogExerciseEvaluatorMixin
     );
   }
 
-  Future<void> sendMessage(String message) async {
+  Future<void> sendDialogMessage(String message) async {
     final state = _exerciseStateSignal.value;
     if (state is! DialogExerciseState) {
       throw StateError('The current exercise is not a dialog exercise.');

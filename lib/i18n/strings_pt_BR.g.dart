@@ -221,6 +221,8 @@ class _Translations$exercise$pt_BR implements Translations$exercise$en {
 	@override String get abruptChatFeedback => 'O chat foi encerrado abruptamente.';
 	@override String get endChatTitle => 'Encerrar o chat?';
 	@override String get endChatMessage => 'O chat será encerrado abruptamente e marcado como incorreto.';
+	@override String get newChatTitle => 'Iniciar um novo chat?';
+	@override String get newChatMessage => 'As mensagens do chat atual serão excluídas.';
 }
 
 // Path: loading
@@ -371,6 +373,8 @@ extension on TranslationsPtBr {
 			'exercise.abruptChatFeedback' => 'O chat foi encerrado abruptamente.',
 			'exercise.endChatTitle' => 'Encerrar o chat?',
 			'exercise.endChatMessage' => 'O chat será encerrado abruptamente e marcado como incorreto.',
+			'exercise.newChatTitle' => 'Iniciar um novo chat?',
+			'exercise.newChatMessage' => 'As mensagens do chat atual serão excluídas.',
 			'loading.exercises' => 'Obtendo exercícios',
 			'loading.feedback' => 'Obtendo feedback',
 			'feedback.regenerateExercises' => 'Gerar exercícios novamente',

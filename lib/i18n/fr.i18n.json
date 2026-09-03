@@ -103,7 +103,9 @@
     "next": "Exercice suivant",
     "abruptChatFeedback": "La discussion s’est terminée brusquement.",
     "endChatTitle": "Terminer la discussion ?",
-    "endChatMessage": "La discussion se terminera brusquement et sera considérée comme incorrecte."
+    "endChatMessage": "La discussion se terminera brusquement et sera considérée comme incorrecte.",
+    "newChatTitle": "Commencer une nouvelle discussion ?",
+    "newChatMessage": "Les messages de la discussion actuelle seront supprimés."
   },
   "loading": {
     "exercises": "Récupération des exercices",

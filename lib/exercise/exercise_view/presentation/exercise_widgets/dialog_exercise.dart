@@ -780,6 +780,7 @@ class _DialogMessageInputState extends State<DialogMessageInput> {
           child: TextField(
             controller: _controller,
             enabled: widget.isEnabled,
+            textInputAction: TextInputAction.send,
             onSubmitted: (_) => _submit(),
             decoration: InputDecoration(
               border: OutlineInputBorder(

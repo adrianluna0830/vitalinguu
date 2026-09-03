@@ -7,7 +7,6 @@ import 'package:vitalinguu/core/domain/interfaces/i_text_to_speech.dart';
 import 'package:vitalinguu/core/domain/models/language_locale.dart';
 import 'package:vitalinguu/core/domain/one_of.dart';
 
-
 bool isRetryableApiFailure(ApiFailure failure) {
   return switch (failure) {
     UsageLimitFailure() || TemporaryFailure() => true,
@@ -44,6 +43,20 @@ mixin AIErrorRetryMixin {
   }) {
     return _generateWithRetry(
       () => ai.generateResponse(prompt, systemInstruction),
+      attemptsBeforeNotifying: attemptsBeforeNotifying,
+    );
+  }
+
+  @protected
+  Future<OneOf2<String, StopExecution>> generateChatResponse(
+    IAI ai,
+    String prompt,
+    List<AIMessage> messages,
+    String? systemInstruction, {
+    int attemptsBeforeNotifying = 3,
+  }) {
+    return _generateWithRetry(
+      () => ai.generateChatResponse(prompt, messages, systemInstruction),
       attemptsBeforeNotifying: attemptsBeforeNotifying,
     );
   }

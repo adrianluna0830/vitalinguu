@@ -103,7 +103,9 @@
     "next": "Next exercise",
     "abruptChatFeedback": "Chat ended abruptly.",
     "endChatTitle": "End the chat?",
-    "endChatMessage": "The chat will end abruptly and be marked as incorrect."
+    "endChatMessage": "The chat will end abruptly and be marked as incorrect.",
+    "newChatTitle": "Start a new chat?",
+    "newChatMessage": "The messages in the current chat will be deleted."
   },
   "loading": { "exercises": "Fetching exercises", "feedback": "Fetching feedback" },
   "feedback": {

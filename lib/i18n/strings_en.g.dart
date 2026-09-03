@@ -366,6 +366,12 @@ class Translations$exercise$en {
 
 	/// en: 'The chat will end abruptly and be marked as incorrect.'
 	String get endChatMessage => 'The chat will end abruptly and be marked as incorrect.';
+
+	/// en: 'Start a new chat?'
+	String get newChatTitle => 'Start a new chat?';
+
+	/// en: 'The messages in the current chat will be deleted.'
+	String get newChatMessage => 'The messages in the current chat will be deleted.';
 }
 
 // Path: loading
@@ -554,6 +560,8 @@ extension on Translations {
 			'exercise.abruptChatFeedback' => 'Chat ended abruptly.',
 			'exercise.endChatTitle' => 'End the chat?',
 			'exercise.endChatMessage' => 'The chat will end abruptly and be marked as incorrect.',
+			'exercise.newChatTitle' => 'Start a new chat?',
+			'exercise.newChatMessage' => 'The messages in the current chat will be deleted.',
 			'loading.exercises' => 'Fetching exercises',
 			'loading.feedback' => 'Fetching feedback',
 			'feedback.regenerateExercises' => 'Regenerate exercises',

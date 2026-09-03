@@ -103,7 +103,9 @@
     "next": "Esercizio successivo",
     "abruptChatFeedback": "La chat è terminata bruscamente.",
     "endChatTitle": "Terminare la chat?",
-    "endChatMessage": "La chat terminerà bruscamente e sarà contrassegnata come errata."
+    "endChatMessage": "La chat terminerà bruscamente e sarà contrassegnata come errata.",
+    "newChatTitle": "Avviare una nuova chat?",
+    "newChatMessage": "I messaggi della chat attuale verranno eliminati."
   },
   "loading": {
     "exercises": "Recupero degli esercizi",

@@ -103,7 +103,9 @@
     "next": "Nächste Übung",
     "abruptChatFeedback": "Chat wurde vorzeitig beendet.",
     "endChatTitle": "Chat beenden?",
-    "endChatMessage": "Der Chat wird vorzeitig beendet und als falsch bewertet."
+    "endChatMessage": "Der Chat wird vorzeitig beendet und als falsch bewertet.",
+    "newChatTitle": "Neuen Chat starten?",
+    "newChatMessage": "Die Nachrichten des aktuellen Chats werden gelöscht."
   },
   "loading": { "exercises": "Übungen werden abgerufen", "feedback": "Feedback wird abgerufen" },
   "feedback": {

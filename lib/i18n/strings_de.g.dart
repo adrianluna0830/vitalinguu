@@ -221,6 +221,8 @@ class _Translations$exercise$de implements Translations$exercise$en {
 	@override String get abruptChatFeedback => 'Chat wurde vorzeitig beendet.';
 	@override String get endChatTitle => 'Chat beenden?';
 	@override String get endChatMessage => 'Der Chat wird vorzeitig beendet und als falsch bewertet.';
+	@override String get newChatTitle => 'Neuen Chat starten?';
+	@override String get newChatMessage => 'Die Nachrichten des aktuellen Chats werden gelöscht.';
 }
 
 // Path: loading
@@ -371,6 +373,8 @@ extension on TranslationsDe {
 			'exercise.abruptChatFeedback' => 'Chat wurde vorzeitig beendet.',
 			'exercise.endChatTitle' => 'Chat beenden?',
 			'exercise.endChatMessage' => 'Der Chat wird vorzeitig beendet und als falsch bewertet.',
+			'exercise.newChatTitle' => 'Neuen Chat starten?',
+			'exercise.newChatMessage' => 'Die Nachrichten des aktuellen Chats werden gelöscht.',
 			'loading.exercises' => 'Übungen werden abgerufen',
 			'loading.feedback' => 'Feedback wird abgerufen',
 			'feedback.regenerateExercises' => 'Übungen neu erstellen',

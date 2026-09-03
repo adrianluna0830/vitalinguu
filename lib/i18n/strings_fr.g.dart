@@ -221,6 +221,8 @@ class _Translations$exercise$fr implements Translations$exercise$en {
 	@override String get abruptChatFeedback => 'La discussion s’est terminée brusquement.';
 	@override String get endChatTitle => 'Terminer la discussion ?';
 	@override String get endChatMessage => 'La discussion se terminera brusquement et sera considérée comme incorrecte.';
+	@override String get newChatTitle => 'Commencer une nouvelle discussion ?';
+	@override String get newChatMessage => 'Les messages de la discussion actuelle seront supprimés.';
 }
 
 // Path: loading
@@ -371,6 +373,8 @@ extension on TranslationsFr {
 			'exercise.abruptChatFeedback' => 'La discussion s’est terminée brusquement.',
 			'exercise.endChatTitle' => 'Terminer la discussion ?',
 			'exercise.endChatMessage' => 'La discussion se terminera brusquement et sera considérée comme incorrecte.',
+			'exercise.newChatTitle' => 'Commencer une nouvelle discussion ?',
+			'exercise.newChatMessage' => 'Les messages de la discussion actuelle seront supprimés.',
 			'loading.exercises' => 'Récupération des exercices',
 			'loading.feedback' => 'Récupération du feedback',
 			'feedback.regenerateExercises' => 'Régénérer les exercices',

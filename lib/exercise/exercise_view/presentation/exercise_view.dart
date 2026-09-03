@@ -8,6 +8,7 @@ import 'package:vitalinguu/core/presentation/app_router.gr.dart';
 import 'package:vitalinguu/exercise/exercise_view/domain/exercise_input.dart';
 import 'package:vitalinguu/exercise/exercise_view/domain/exercise_state.dart';
 import 'package:vitalinguu/exercise/exercise_view/domain/exercise_view_model.dart';
+import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_chat_dialog.dart';
 import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_widgets/dialog_exercise.dart';
 import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_widgets/fill_the_blank_exercise.dart';
 import 'package:vitalinguu/exercise/exercise_view/presentation/exercise_widgets/match_elements_exercise.dart';
@@ -60,6 +61,31 @@ class _ExerciseViewState extends State<ExerciseView>
     super.dispose();
   }
 
+  void _showExerciseChatDialog() {
+    unawaited(
+      showDialog<void>(
+        context: context,
+        builder: (dialogContext) => SignalBuilder(
+          builder: (context) {
+            return Dialog(
+              insetPadding: const EdgeInsets.all(24),
+              shape: const RoundedRectangleBorder(
+                borderRadius: ExerciseChatDialog.borderRadius,
+              ),
+              child: ExerciseChatDialog(
+                messages: viewModel.messages.value,
+                onUserMessageSubmitted: viewModel.sendMessage,
+                isTyping: viewModel.isTyping.value,
+                onNewChat: viewModel.newChat,
+                onClose: () => Navigator.of(dialogContext).pop(),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SignalBuilder(
@@ -71,13 +97,30 @@ class _ExerciseViewState extends State<ExerciseView>
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: Text(state.exerciseTopicName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: Text(
-                    '${state.exerciseNumber} / ${viewModel.exerciseCount}',
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 48),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              state.exerciseTopicName,
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              '${state.exerciseNumber} / '
+                              '${viewModel.exerciseCount}',
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: _showExerciseChatDialog,
+                        icon: const Icon(Icons.question_answer_outlined),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(child: _buildExercise(state, viewModel)),
@@ -102,7 +145,7 @@ class _ExerciseViewState extends State<ExerciseView>
         key: ValueKey(state.currentIndex),
         exerciseTask: state.input.exerciseTask,
         messages: state.messages,
-        onUserMessageSubmitted: viewModel.sendMessage,
+        onUserMessageSubmitted: viewModel.sendDialogMessage,
         onDialogEndedAbruptly: viewModel.endDialogAbruptly,
         onNextExercise: viewModel.nextExercise,
         isTyping: state.isTyping,
