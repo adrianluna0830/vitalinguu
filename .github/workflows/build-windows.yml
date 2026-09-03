@@ -5,11 +5,12 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    # audioplayers 6.7.x requires the Visual Studio 2022 toolchain.
+    runs-on: windows-2022
 
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
