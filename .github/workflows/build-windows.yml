@@ -25,12 +25,22 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Read app version
+        id: app-version
+        shell: pwsh
+        run: |
+          $match = Get-Content pubspec.yaml | Select-String '^version:\s*([0-9]+\.[0-9]+\.[0-9]+)\+[0-9]+\s*$'
+          if (-not $match) {
+            throw 'Could not read the app version from pubspec.yaml.'
+          }
+          "version=$($match.Matches.Groups[1].Value)" >> $env:GITHUB_OUTPUT
+
       - name: Build Windows release
         run: flutter build windows --release
 
       - name: Upload Windows ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: Vitalinguu-1.0.0-windows-x64
+          name: Vitalinguu-${{ steps.app-version.outputs.version }}-windows-x64
           path: build/windows/x64/runner/Release/
           if-no-files-found: error
