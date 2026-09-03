@@ -1,0 +1,116 @@
+{
+  "app": { "title": "Vitalinguu" },
+  "common": {
+    "continue": "Continua",
+    "confirm": "Conferma",
+    "cancel": "Annulla",
+    "back": "Indietro",
+    "retry": "Riprova",
+    "delete": "Elimina"
+  },
+  "languages": {
+    "english": "Inglese",
+    "spanish": "Spagnolo (Messico)",
+    "german": "Tedesco",
+    "portuguese": "Portoghese (Brasile)",
+    "french": "Francese",
+    "italian": "Italiano",
+    "select": "Seleziona una lingua"
+  },
+  "navigation": { "home": "Home", "settings": "Impostazioni" },
+  "onboarding": {
+    "nativeLanguageTitle": "Configura la tua lingua madre",
+    "nativeLanguageLabel": "Lingua madre",
+    "learningLanguageTitle": "Configura la lingua che vuoi imparare",
+    "learningLanguageLabel": "Lingua di apprendimento",
+    "apiKeyTitle": "Configura la tua chiave API",
+    "apiKeyLabel": "Chiave API",
+    "useSavedApiKey": "Usa la chiave API salvata",
+    "getApiKeyLink": "Ottieni una chiave API su nano-gpt.com",
+    "couldNotOpenApiLink": "Impossibile aprire la pagina API di nano-gpt.com.",
+    "invalidApiKey": "La chiave API non è valida.",
+    "unavailableApiKey": "Impossibile verificare la chiave API. Riprova."
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "configuration": "Configurazione",
+    "minimumCredit": "Devi avere più di {amount} USD di credito per usare l’app.",
+    "voiceSpeed": "Velocità della voce",
+    "feedbackLookback": "Feedback considerato",
+    "days": "{count} giorni",
+    "credit": {
+      "refresh": "Aggiorna credito",
+      "notStarted": "Credito: —",
+      "loading": "Verifica del credito...",
+      "available": "{amount} USD",
+      "unauthorized": "Credito non autorizzato",
+      "unavailable": "Credito non disponibile"
+    }
+  },
+  "errors": {
+    "configureApiKey": "Configura la chiave API",
+    "authentication": "Impossibile accedere al servizio. Controlla la tua chiave API.",
+    "usageLimit": "Hai raggiunto il limite di utilizzo. Controlla il saldo o riprova più tardi.",
+    "temporary": "Il servizio ha riscontrato un problema temporaneo.",
+    "request": "Impossibile completare la richiesta."
+  },
+  "learningHome": {
+    "priorityHelp": "La priorità determina quali opzioni appariranno più o meno spesso:",
+    "priorityLow": "Bassa",
+    "priorityMedium": "Media",
+    "priorityHigh": "Alta",
+    "configurationTab": "Configurazione",
+    "topicsTab": "Argomenti"
+  },
+  "exerciseSetup": {
+    "cefrLevel": "Livello QCER",
+    "exerciseCount": "Numero di esercizi",
+    "promptContent": "Contenuto della consegna",
+    "text": "Testo",
+    "audio": "Audio",
+    "exerciseTypes": "Tipi di esercizio",
+    "deselectAll": "Deseleziona tutto",
+    "selectAll": "Seleziona tutto",
+    "availableTopics": "Argomenti disponibili",
+    "noAvailableTopics": "Nessun argomento disponibile",
+    "minimumCredit": "Devi avere più di {amount} USD di credito per continuare.",
+    "types": {
+      "dialog": "Dialogo",
+      "fillTheBlank": "Completa gli spazi",
+      "matchElements": "Abbina gli elementi",
+      "multipleChoice": "Scelta multipla",
+      "multipleChoiceList": "Lista a scelta multipla",
+      "selectAllThatApply": "Seleziona tutte le risposte corrette",
+      "wordOrdering": "Riordina le parole",
+      "write": "Scrivi",
+      "writeList": "Scrivi un elenco"
+    }
+  },
+  "topics": {
+    "single": "Un argomento",
+    "multiple": "Più argomenti",
+    "titleHint": "Titolo",
+    "contentHint": "Contenuto",
+    "writingGuide": "Per ottenere esercizi di qualità, usa un titolo chiaro e descrivi con precisione nel contenuto ciò che vuoi praticare. Specifica il contesto, il vocabolario, la grammatica, l’abilità e i dettagli importanti. Puoi anche richiedere una tecnica, un formato, un tipo di situazione, la pratica degli errori comuni o un aspetto da rafforzare. Evita descrizioni troppo generiche.",
+    "multipleInstructions": "Per aggiungere più argomenti, scrivi ~ prima di ogni titolo e ^ prima del relativo contenuto. Il successivo ~ inizia un altro argomento. Non lasciare vuoti titoli o contenuti.\n\nEsempio: ~Viaggi^Vocabolario per l’aeroporto~Cibo^Frasi per un ristorante",
+    "invalidMultiple": "Il testo non è valido. Assicurati che ogni argomento abbia un titolo contrassegnato da ~ e un contenuto contrassegnato da ^, senza lasciarli vuoti.",
+    "deleteConfirmation": "Vuoi eliminare gli argomenti selezionati?"
+  },
+  "exercise": {
+    "correctAnswer": "Risposta corretta!",
+    "confirmAnswer": "Conferma risposta",
+    "confirmAnswers": "Conferma risposte",
+    "next": "Esercizio successivo",
+    "abruptChatFeedback": "La chat è terminata bruscamente.",
+    "endChatTitle": "Terminare la chat?",
+    "endChatMessage": "La chat terminerà bruscamente e sarà contrassegnata come errata."
+  },
+  "loading": {
+    "exercises": "Recupero degli esercizi",
+    "feedback": "Recupero del feedback"
+  },
+  "feedback": {
+    "regenerateExercises": "Rigenera gli esercizi",
+    "backToMenu": "Torna al menu"
+  }
+}

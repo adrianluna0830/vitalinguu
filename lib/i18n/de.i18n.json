@@ -1,0 +1,113 @@
+{
+  "app": { "title": "Vitalinguu" },
+  "common": {
+    "continue": "Weiter",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen",
+    "back": "Zurück",
+    "retry": "Erneut versuchen",
+    "delete": "Löschen"
+  },
+  "languages": {
+    "english": "Englisch",
+    "spanish": "Spanisch (Mexiko)",
+    "german": "Deutsch",
+    "portuguese": "Portugiesisch (Brasilien)",
+    "french": "Französisch",
+    "italian": "Italienisch",
+    "select": "Sprache auswählen"
+  },
+  "navigation": { "home": "Start", "settings": "Einstellungen" },
+  "onboarding": {
+    "nativeLanguageTitle": "Muttersprache festlegen",
+    "nativeLanguageLabel": "Muttersprache",
+    "learningLanguageTitle": "Lernsprache festlegen",
+    "learningLanguageLabel": "Lernsprache",
+    "apiKeyTitle": "API-Schlüssel einrichten",
+    "apiKeyLabel": "API-Schlüssel",
+    "useSavedApiKey": "Gespeicherten API-Schlüssel verwenden",
+    "getApiKeyLink": "API-Schlüssel auf nano-gpt.com erhalten",
+    "couldNotOpenApiLink": "Die API-Seite von nano-gpt.com konnte nicht geöffnet werden.",
+    "invalidApiKey": "Der API-Schlüssel ist ungültig.",
+    "unavailableApiKey": "Der API-Schlüssel konnte nicht überprüft werden. Versuche es erneut."
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "configuration": "Konfiguration",
+    "minimumCredit": "Du brauchst mehr als {amount} USD Guthaben, um die App zu verwenden.",
+    "voiceSpeed": "Sprechgeschwindigkeit",
+    "feedbackLookback": "Berücksichtigtes Feedback",
+    "days": "{count} Tage",
+    "credit": {
+      "refresh": "Guthaben aktualisieren",
+      "notStarted": "Guthaben: —",
+      "loading": "Guthaben wird geprüft...",
+      "available": "{amount} USD",
+      "unauthorized": "Guthaben nicht autorisiert",
+      "unavailable": "Guthaben nicht verfügbar"
+    }
+  },
+  "errors": {
+    "configureApiKey": "API-Schlüssel einrichten",
+    "authentication": "Auf den Dienst konnte nicht zugegriffen werden. Überprüfe deinen API-Schlüssel.",
+    "usageLimit": "Du hast das Nutzungslimit erreicht. Überprüfe dein Guthaben oder versuche es später erneut.",
+    "temporary": "Beim Dienst ist ein vorübergehendes Problem aufgetreten.",
+    "request": "Die Anfrage konnte nicht abgeschlossen werden."
+  },
+  "learningHome": {
+    "priorityHelp": "Die Priorität bestimmt, welche Optionen häufiger oder seltener erscheinen:",
+    "priorityLow": "Niedrig",
+    "priorityMedium": "Mittel",
+    "priorityHigh": "Hoch",
+    "configurationTab": "Konfiguration",
+    "topicsTab": "Themen"
+  },
+  "exerciseSetup": {
+    "cefrLevel": "GER-Niveau",
+    "exerciseCount": "Anzahl der Übungen",
+    "promptContent": "Aufgabeninhalt",
+    "text": "Text",
+    "audio": "Audio",
+    "exerciseTypes": "Übungstypen",
+    "deselectAll": "Auswahl aufheben",
+    "selectAll": "Alle auswählen",
+    "availableTopics": "Verfügbare Themen",
+    "noAvailableTopics": "Keine Themen verfügbar",
+    "minimumCredit": "Du brauchst mehr als {amount} USD Guthaben, um fortzufahren.",
+    "types": {
+      "dialog": "Dialog",
+      "fillTheBlank": "Lücken ausfüllen",
+      "matchElements": "Elemente zuordnen",
+      "multipleChoice": "Multiple Choice",
+      "multipleChoiceList": "Multiple-Choice-Liste",
+      "selectAllThatApply": "Alle zutreffenden auswählen",
+      "wordOrdering": "Wörter ordnen",
+      "write": "Schreiben",
+      "writeList": "Liste schreiben"
+    }
+  },
+  "topics": {
+    "single": "Ein Thema",
+    "multiple": "Mehrere Themen",
+    "titleHint": "Titel",
+    "contentHint": "Inhalt",
+    "writingGuide": "Verwende für hochwertige Übungen einen klaren Titel und beschreibe im Inhalt genau, was du üben möchtest. Nenne ausdrücklich Kontext, Wortschatz, Grammatik, Fertigkeit und wichtige Details. Du kannst auch eine bestimmte Technik, ein Format, eine Situation, das Üben typischer Fehler oder andere Schwerpunkte angeben. Vermeide zu allgemeine Beschreibungen.",
+    "multipleInstructions": "Um mehrere Themen hinzuzufügen, schreibe ~ vor jeden Titel und ^ vor den jeweiligen Inhalt. Das nächste ~ beginnt ein neues Thema. Titel und Inhalte dürfen nicht leer sein.\n\nBeispiel: ~Reisen^Wortschatz für den Flughafen~Essen^Sätze für ein Restaurant",
+    "invalidMultiple": "Der Text ist ungültig. Stelle sicher, dass jedes Thema einen mit ~ markierten Titel und einen mit ^ markierten Inhalt hat und beides nicht leer ist.",
+    "deleteConfirmation": "Möchtest du die ausgewählten Themen löschen?"
+  },
+  "exercise": {
+    "correctAnswer": "Richtig!",
+    "confirmAnswer": "Antwort bestätigen",
+    "confirmAnswers": "Antworten bestätigen",
+    "next": "Nächste Übung",
+    "abruptChatFeedback": "Chat wurde vorzeitig beendet.",
+    "endChatTitle": "Chat beenden?",
+    "endChatMessage": "Der Chat wird vorzeitig beendet und als falsch bewertet."
+  },
+  "loading": { "exercises": "Übungen werden abgerufen", "feedback": "Feedback wird abgerufen" },
+  "feedback": {
+    "regenerateExercises": "Übungen neu erstellen",
+    "backToMenu": "Zurück zum Menü"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "app": { "title": "Vitalinguu" },
+  "common": {
+    "continue": "Continuer",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "back": "Retour",
+    "retry": "Réessayer",
+    "delete": "Supprimer"
+  },
+  "languages": {
+    "english": "Anglais",
+    "spanish": "Espagnol (Mexique)",
+    "german": "Allemand",
+    "portuguese": "Portugais (Brésil)",
+    "french": "Français",
+    "italian": "Italien",
+    "select": "Sélectionnez une langue"
+  },
+  "navigation": { "home": "Accueil", "settings": "Paramètres" },
+  "onboarding": {
+    "nativeLanguageTitle": "Configurez votre langue maternelle",
+    "nativeLanguageLabel": "Langue maternelle",
+    "learningLanguageTitle": "Configurez la langue que vous souhaitez apprendre",
+    "learningLanguageLabel": "Langue d’apprentissage",
+    "apiKeyTitle": "Configurez votre clé API",
+    "apiKeyLabel": "Clé API",
+    "useSavedApiKey": "Utiliser la clé API enregistrée",
+    "getApiKeyLink": "Obtenir une clé API sur nano-gpt.com",
+    "couldNotOpenApiLink": "Impossible d’ouvrir la page API de nano-gpt.com.",
+    "invalidApiKey": "La clé API n’est pas valide.",
+    "unavailableApiKey": "Impossible de valider la clé API. Réessayez."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "configuration": "Configuration",
+    "minimumCredit": "Vous devez disposer de plus de {amount} USD de crédit pour utiliser l’application.",
+    "voiceSpeed": "Vitesse de la voix",
+    "feedbackLookback": "Historique pris en compte",
+    "days": "{count} jours",
+    "credit": {
+      "refresh": "Actualiser le crédit",
+      "notStarted": "Crédit : —",
+      "loading": "Consultation du crédit...",
+      "available": "{amount} USD",
+      "unauthorized": "Crédit non autorisé",
+      "unavailable": "Crédit indisponible"
+    }
+  },
+  "errors": {
+    "configureApiKey": "Configurer la clé API",
+    "authentication": "Impossible d’accéder au service. Vérifiez votre clé API.",
+    "usageLimit": "Vous avez atteint la limite d’utilisation. Vérifiez votre solde ou réessayez plus tard.",
+    "temporary": "Le service a rencontré un problème temporaire.",
+    "request": "Impossible de terminer la requête."
+  },
+  "learningHome": {
+    "priorityHelp": "La priorité détermine quelles options apparaîtront plus ou moins souvent :",
+    "priorityLow": "Faible",
+    "priorityMedium": "Moyenne",
+    "priorityHigh": "Élevée",
+    "configurationTab": "Configuration",
+    "topicsTab": "Thèmes"
+  },
+  "exerciseSetup": {
+    "cefrLevel": "Niveau CECR",
+    "exerciseCount": "Nombre d’exercices",
+    "promptContent": "Contenu de la consigne",
+    "text": "Texte",
+    "audio": "Audio",
+    "exerciseTypes": "Types d’exercice",
+    "deselectAll": "Tout désélectionner",
+    "selectAll": "Tout sélectionner",
+    "availableTopics": "Thèmes disponibles",
+    "noAvailableTopics": "Aucun thème disponible",
+    "minimumCredit": "Vous devez disposer de plus de {amount} USD de crédit pour continuer.",
+    "types": {
+      "dialog": "Dialogue",
+      "fillTheBlank": "Compléter les blancs",
+      "matchElements": "Associer les éléments",
+      "multipleChoice": "Choix multiple",
+      "multipleChoiceList": "Liste à choix multiple",
+      "selectAllThatApply": "Sélectionner toutes les bonnes réponses",
+      "wordOrdering": "Remettre les mots dans l’ordre",
+      "write": "Écrire",
+      "writeList": "Écrire une liste"
+    }
+  },
+  "topics": {
+    "single": "Un thème",
+    "multiple": "Plusieurs thèmes",
+    "titleHint": "Titre",
+    "contentHint": "Contenu",
+    "writingGuide": "Pour obtenir des exercices de qualité, utilisez un titre clair et décrivez précisément dans le contenu ce que vous souhaitez pratiquer. Indiquez explicitement le contexte, le vocabulaire, la grammaire, la compétence et les détails importants. Vous pouvez aussi demander une technique, un format, un type de situation, la pratique d’erreurs fréquentes ou un aspect à renforcer. Évitez les descriptions trop générales.",
+    "multipleInstructions": "Pour ajouter plusieurs thèmes, écrivez ~ avant chaque titre et ^ avant son contenu. Le prochain ~ commence un autre thème. Ne laissez ni titre ni contenu vide.\n\nExemple : ~Voyages^Vocabulaire pour l’aéroport~Cuisine^Phrases pour un restaurant",
+    "invalidMultiple": "Le texte n’est pas valide. Vérifiez que chaque thème possède un titre marqué par ~ et un contenu marqué par ^, sans les laisser vides.",
+    "deleteConfirmation": "Voulez-vous supprimer les thèmes sélectionnés ?"
+  },
+  "exercise": {
+    "correctAnswer": "Bonne réponse !",
+    "confirmAnswer": "Confirmer la réponse",
+    "confirmAnswers": "Confirmer les réponses",
+    "next": "Exercice suivant",
+    "abruptChatFeedback": "La discussion s’est terminée brusquement.",
+    "endChatTitle": "Terminer la discussion ?",
+    "endChatMessage": "La discussion se terminera brusquement et sera considérée comme incorrecte."
+  },
+  "loading": {
+    "exercises": "Récupération des exercices",
+    "feedback": "Récupération du feedback"
+  },
+  "feedback": {
+    "regenerateExercises": "Régénérer les exercices",
+    "backToMenu": "Retour au menu"
+  }
+}

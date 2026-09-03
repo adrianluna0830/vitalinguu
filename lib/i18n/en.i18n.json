@@ -1,0 +1,113 @@
+{
+  "app": { "title": "Vitalinguu" },
+  "common": {
+    "continue": "Continue",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "back": "Back",
+    "retry": "Retry",
+    "delete": "Delete"
+  },
+  "languages": {
+    "english": "English",
+    "spanish": "Spanish (Mexico)",
+    "german": "German",
+    "portuguese": "Portuguese (Brazil)",
+    "french": "French",
+    "italian": "Italian",
+    "select": "Select a language"
+  },
+  "navigation": { "home": "Home", "settings": "Settings" },
+  "onboarding": {
+    "nativeLanguageTitle": "Set up your native language",
+    "nativeLanguageLabel": "Native language",
+    "learningLanguageTitle": "Set up the language you want to learn",
+    "learningLanguageLabel": "Learning language",
+    "apiKeyTitle": "Set up your API key",
+    "apiKeyLabel": "API key",
+    "useSavedApiKey": "Use saved API key",
+    "getApiKeyLink": "Get an API key from nano-gpt.com",
+    "couldNotOpenApiLink": "The nano-gpt.com API page could not be opened.",
+    "invalidApiKey": "The API key is invalid.",
+    "unavailableApiKey": "The API key could not be validated. Try again."
+  },
+  "settings": {
+    "title": "Settings",
+    "configuration": "Configuration",
+    "minimumCredit": "You need more than {amount} USD in credit to use the app.",
+    "voiceSpeed": "Voice speed",
+    "feedbackLookback": "Feedback history",
+    "days": "{count} days",
+    "credit": {
+      "refresh": "Refresh credit",
+      "notStarted": "Credit: —",
+      "loading": "Checking credit...",
+      "available": "{amount} USD",
+      "unauthorized": "Credit not authorized",
+      "unavailable": "Credit unavailable"
+    }
+  },
+  "errors": {
+    "configureApiKey": "Set up API key",
+    "authentication": "The service could not be accessed. Check your API key.",
+    "usageLimit": "You have reached the usage limit. Check your balance or try again later.",
+    "temporary": "The service encountered a temporary problem.",
+    "request": "The request could not be completed."
+  },
+  "learningHome": {
+    "priorityHelp": "Priority determines which options appear more or less often:",
+    "priorityLow": "Low",
+    "priorityMedium": "Medium",
+    "priorityHigh": "High",
+    "configurationTab": "Configuration",
+    "topicsTab": "Topics"
+  },
+  "exerciseSetup": {
+    "cefrLevel": "CEFR level",
+    "exerciseCount": "Number of exercises",
+    "promptContent": "Prompt content",
+    "text": "Text",
+    "audio": "Audio",
+    "exerciseTypes": "Exercise types",
+    "deselectAll": "Deselect all",
+    "selectAll": "Select all",
+    "availableTopics": "Available topics",
+    "noAvailableTopics": "No topics available",
+    "minimumCredit": "You need more than {amount} USD in credit to continue.",
+    "types": {
+      "dialog": "Dialogue",
+      "fillTheBlank": "Fill in the blanks",
+      "matchElements": "Match elements",
+      "multipleChoice": "Multiple choice",
+      "multipleChoiceList": "Multiple-choice list",
+      "selectAllThatApply": "Select all that apply",
+      "wordOrdering": "Word ordering",
+      "write": "Write",
+      "writeList": "Write a list"
+    }
+  },
+  "topics": {
+    "single": "One topic",
+    "multiple": "Multiple topics",
+    "titleHint": "Title",
+    "contentHint": "Content",
+    "writingGuide": "For high-quality exercises, use a clear title and describe exactly what you want to practice in the content. Be explicit about the context, vocabulary, grammar, skill, and important details. You can also request a specific technique, format, type of situation, practice for common mistakes, or anything you want reinforced. Avoid descriptions that are too general.",
+    "multipleInstructions": "To add multiple topics, type ~ before each title and ^ before its content. The next ~ starts another topic. Do not leave titles or content empty.\n\nExample: ~Travel^Airport vocabulary~Food^Phrases for a restaurant",
+    "invalidMultiple": "The text is invalid. Make sure every topic has a title marked with ~ and content marked with ^, with neither left empty.",
+    "deleteConfirmation": "Do you want to delete the selected topics?"
+  },
+  "exercise": {
+    "correctAnswer": "Correct!",
+    "confirmAnswer": "Confirm answer",
+    "confirmAnswers": "Confirm answers",
+    "next": "Next exercise",
+    "abruptChatFeedback": "Chat ended abruptly.",
+    "endChatTitle": "End the chat?",
+    "endChatMessage": "The chat will end abruptly and be marked as incorrect."
+  },
+  "loading": { "exercises": "Fetching exercises", "feedback": "Fetching feedback" },
+  "feedback": {
+    "regenerateExercises": "Regenerate exercises",
+    "backToMenu": "Back to menu"
+  }
+}

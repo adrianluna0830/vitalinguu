@@ -1,0 +1,121 @@
+{
+  "app": {
+    "title": "Vitalinguu"
+  },
+  "common": {
+    "continue": "Continuar",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "back": "Volver",
+    "retry": "Reintentar",
+    "delete": "Eliminar"
+  },
+  "languages": {
+    "english": "Inglés",
+    "spanish": "Español (México)",
+    "german": "Alemán",
+    "portuguese": "Portugués (Brasil)",
+    "french": "Francés",
+    "italian": "Italiano",
+    "select": "Selecciona un idioma"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "settings": "Ajustes"
+  },
+  "onboarding": {
+    "nativeLanguageTitle": "Configura tu idioma nativo",
+    "nativeLanguageLabel": "Idioma nativo",
+    "learningLanguageTitle": "Configura el idioma que quieres aprender",
+    "learningLanguageLabel": "Idioma de aprendizaje",
+    "apiKeyTitle": "Configura tu API key",
+    "apiKeyLabel": "API key",
+    "useSavedApiKey": "Usar API key guardada",
+    "getApiKeyLink": "Obtener una API key en nano-gpt.com",
+    "couldNotOpenApiLink": "No se pudo abrir la página de API de nano-gpt.com.",
+    "invalidApiKey": "La API key no es válida.",
+    "unavailableApiKey": "No se pudo validar la API key. Inténtalo de nuevo."
+  },
+  "settings": {
+    "title": "Ajustes",
+    "configuration": "Configuración",
+    "minimumCredit": "Necesitas más de {amount} USD de crédito para usar la app.",
+    "voiceSpeed": "Velocidad de voz",
+    "feedbackLookback": "Feedback considerado",
+    "days": "{count} días",
+    "credit": {
+      "refresh": "Actualizar crédito",
+      "notStarted": "Crédito: —",
+      "loading": "Consultando crédito...",
+      "available": "{amount} USD",
+      "unauthorized": "Crédito no autorizado",
+      "unavailable": "Crédito no disponible"
+    }
+  },
+  "errors": {
+    "configureApiKey": "Configurar API key",
+    "authentication": "No se pudo acceder al servicio. Revisa tu API key.",
+    "usageLimit": "Alcanzaste el límite de uso. Revisa tu saldo o inténtalo más tarde.",
+    "temporary": "El servicio tuvo un problema temporal.",
+    "request": "No se pudo completar la solicitud."
+  },
+  "learningHome": {
+    "priorityHelp": "La prioridad indica qué opciones aparecerán con mayor o menor frecuencia:",
+    "priorityLow": "Baja",
+    "priorityMedium": "Media",
+    "priorityHigh": "Alta",
+    "configurationTab": "Configuración",
+    "topicsTab": "Temas"
+  },
+  "exerciseSetup": {
+    "cefrLevel": "Nivel CEFR",
+    "exerciseCount": "Número de ejercicios",
+    "promptContent": "Contenido del prompt",
+    "text": "Texto",
+    "audio": "Audio",
+    "exerciseTypes": "Tipos de ejercicio",
+    "deselectAll": "Deseleccionar todos",
+    "selectAll": "Seleccionar todos",
+    "availableTopics": "Temas disponibles",
+    "noAvailableTopics": "No hay temas disponibles",
+    "minimumCredit": "Necesitas más de {amount} USD de crédito para continuar.",
+    "types": {
+      "dialog": "Diálogo",
+      "fillTheBlank": "Completar espacios",
+      "matchElements": "Relacionar elementos",
+      "multipleChoice": "Opción múltiple",
+      "multipleChoiceList": "Lista de opción múltiple",
+      "selectAllThatApply": "Seleccionar todas las correctas",
+      "wordOrdering": "Ordenar palabras",
+      "write": "Escribir",
+      "writeList": "Escribir una lista"
+    }
+  },
+  "topics": {
+    "single": "Un tema",
+    "multiple": "Varios temas",
+    "titleHint": "Título",
+    "contentHint": "Contenido",
+    "writingGuide": "Para obtener ejercicios de buena calidad, usa un título claro y describe exactamente qué quieres practicar en el contenido. Sé explícito sobre el contexto, vocabulario, gramática, habilidad y detalles importantes. También puedes pedir una técnica, formato o tipo de situación, práctica de errores comunes o cualquier aspecto que quieras reforzar. Evita descripciones demasiado generales.",
+    "multipleInstructions": "Para agregar varios temas, escribe ~ antes de cada título y ^ antes de su contenido. El siguiente ~ comienza otro tema. No dejes títulos ni contenidos vacíos.\n\nEjemplo: ~Viajes^Vocabulario para el aeropuerto~Comida^Frases para un restaurante",
+    "invalidMultiple": "El texto no es válido. Asegúrate de que cada tema tenga un título con ~ y contenido con ^, sin dejarlos vacíos.",
+    "deleteConfirmation": "¿Quieres eliminar los temas seleccionados?"
+  },
+  "exercise": {
+    "correctAnswer": "¡Contestaste bien!",
+    "confirmAnswer": "Confirmar respuesta",
+    "confirmAnswers": "Confirmar respuestas",
+    "next": "Siguiente ejercicio",
+    "abruptChatFeedback": "Chat terminado abruptamente.",
+    "endChatTitle": "¿Terminar el chat?",
+    "endChatMessage": "El chat terminará abruptamente y se marcará como incorrecto."
+  },
+  "loading": {
+    "exercises": "Obteniendo ejercicios",
+    "feedback": "Obteniendo feedback"
+  },
+  "feedback": {
+    "regenerateExercises": "Regenerar ejercicios",
+    "backToMenu": "Volver al menú"
+  }
+}

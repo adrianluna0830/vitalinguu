@@ -1,0 +1,116 @@
+{
+  "app": { "title": "Vitalinguu" },
+  "common": {
+    "continue": "Continuar",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "back": "Voltar",
+    "retry": "Tentar novamente",
+    "delete": "Excluir"
+  },
+  "languages": {
+    "english": "Inglês",
+    "spanish": "Espanhol (México)",
+    "german": "Alemão",
+    "portuguese": "Português (Brasil)",
+    "french": "Francês",
+    "italian": "Italiano",
+    "select": "Selecione um idioma"
+  },
+  "navigation": { "home": "Início", "settings": "Configurações" },
+  "onboarding": {
+    "nativeLanguageTitle": "Configure seu idioma nativo",
+    "nativeLanguageLabel": "Idioma nativo",
+    "learningLanguageTitle": "Configure o idioma que deseja aprender",
+    "learningLanguageLabel": "Idioma de aprendizagem",
+    "apiKeyTitle": "Configure sua chave de API",
+    "apiKeyLabel": "Chave de API",
+    "useSavedApiKey": "Usar chave de API salva",
+    "getApiKeyLink": "Obter uma chave de API em nano-gpt.com",
+    "couldNotOpenApiLink": "Não foi possível abrir a página da API do nano-gpt.com.",
+    "invalidApiKey": "A chave de API não é válida.",
+    "unavailableApiKey": "Não foi possível validar a chave de API. Tente novamente."
+  },
+  "settings": {
+    "title": "Configurações",
+    "configuration": "Configuração",
+    "minimumCredit": "Você precisa ter mais de {amount} USD em créditos para usar o aplicativo.",
+    "voiceSpeed": "Velocidade da voz",
+    "feedbackLookback": "Feedback considerado",
+    "days": "{count} dias",
+    "credit": {
+      "refresh": "Atualizar crédito",
+      "notStarted": "Crédito: —",
+      "loading": "Consultando crédito...",
+      "available": "{amount} USD",
+      "unauthorized": "Crédito não autorizado",
+      "unavailable": "Crédito indisponível"
+    }
+  },
+  "errors": {
+    "configureApiKey": "Configurar chave de API",
+    "authentication": "Não foi possível acessar o serviço. Verifique sua chave de API.",
+    "usageLimit": "Você atingiu o limite de uso. Verifique seu saldo ou tente novamente mais tarde.",
+    "temporary": "O serviço apresentou um problema temporário.",
+    "request": "Não foi possível concluir a solicitação."
+  },
+  "learningHome": {
+    "priorityHelp": "A prioridade determina quais opções aparecerão com maior ou menor frequência:",
+    "priorityLow": "Baixa",
+    "priorityMedium": "Média",
+    "priorityHigh": "Alta",
+    "configurationTab": "Configuração",
+    "topicsTab": "Tópicos"
+  },
+  "exerciseSetup": {
+    "cefrLevel": "Nível CEFR",
+    "exerciseCount": "Número de exercícios",
+    "promptContent": "Conteúdo do enunciado",
+    "text": "Texto",
+    "audio": "Áudio",
+    "exerciseTypes": "Tipos de exercício",
+    "deselectAll": "Desmarcar todos",
+    "selectAll": "Selecionar todos",
+    "availableTopics": "Tópicos disponíveis",
+    "noAvailableTopics": "Não há tópicos disponíveis",
+    "minimumCredit": "Você precisa ter mais de {amount} USD em créditos para continuar.",
+    "types": {
+      "dialog": "Diálogo",
+      "fillTheBlank": "Preencher lacunas",
+      "matchElements": "Relacionar elementos",
+      "multipleChoice": "Múltipla escolha",
+      "multipleChoiceList": "Lista de múltipla escolha",
+      "selectAllThatApply": "Selecionar todas as opções corretas",
+      "wordOrdering": "Ordenar palavras",
+      "write": "Escrever",
+      "writeList": "Escrever uma lista"
+    }
+  },
+  "topics": {
+    "single": "Um tópico",
+    "multiple": "Vários tópicos",
+    "titleHint": "Título",
+    "contentHint": "Conteúdo",
+    "writingGuide": "Para obter exercícios de qualidade, use um título claro e descreva exatamente no conteúdo o que deseja praticar. Seja explícito sobre o contexto, vocabulário, gramática, habilidade e detalhes importantes. Você também pode pedir uma técnica, formato, tipo de situação, prática de erros comuns ou qualquer aspecto que queira reforçar. Evite descrições muito genéricas.",
+    "multipleInstructions": "Para adicionar vários tópicos, escreva ~ antes de cada título e ^ antes do conteúdo. O próximo ~ inicia outro tópico. Não deixe títulos nem conteúdos vazios.\n\nExemplo: ~Viagens^Vocabulário para o aeroporto~Comida^Frases para um restaurante",
+    "invalidMultiple": "O texto não é válido. Verifique se cada tópico tem um título marcado com ~ e um conteúdo marcado com ^, sem deixá-los vazios.",
+    "deleteConfirmation": "Deseja excluir os tópicos selecionados?"
+  },
+  "exercise": {
+    "correctAnswer": "Resposta correta!",
+    "confirmAnswer": "Confirmar resposta",
+    "confirmAnswers": "Confirmar respostas",
+    "next": "Próximo exercício",
+    "abruptChatFeedback": "O chat foi encerrado abruptamente.",
+    "endChatTitle": "Encerrar o chat?",
+    "endChatMessage": "O chat será encerrado abruptamente e marcado como incorreto."
+  },
+  "loading": {
+    "exercises": "Obtendo exercícios",
+    "feedback": "Obtendo feedback"
+  },
+  "feedback": {
+    "regenerateExercises": "Gerar exercícios novamente",
+    "backToMenu": "Voltar ao menu"
+  }
+}
