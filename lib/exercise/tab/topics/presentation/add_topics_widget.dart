@@ -89,7 +89,9 @@ class _AddTopicsWidgetState extends State<AddTopicsWidget> {
         TextField(
           controller: _controller,
           keyboardType: TextInputType.multiline,
-          maxLines: null,
+          minLines: 1,
+          maxLines: 8,
+          scrollPadding: const EdgeInsets.only(bottom: 80),
           decoration: const InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),

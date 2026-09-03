@@ -113,36 +113,37 @@ class _TopicsListWidgetState extends State<TopicsListWidget> {
             ),
           ),
         if (multiSelectionMode) const SizedBox(height: 8),
-        Expanded(
-          child: ListView.builder(
-            itemCount: widget.topics.length,
-            itemBuilder: (context, index) {
-              final topic = widget.topics[index];
+        ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: widget.topics.length,
+          itemBuilder: (context, index) {
+            final topic = widget.topics[index];
 
-              return Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+            return Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outline,
                 ),
-                child: ListTile(
-                  title: Text(topic.title),
-                  trailing: multiSelectionMode
-                      ? BooleanCircleIndicator(
-                          value: _selectedTopics[topic.id] ?? false,
-                        )
-                      : IconButton(
-                          onPressed: () => _editTopic(topic),
-                          icon: const Icon(Icons.edit),
-                        ),
-                  onTap: () => _onTopicPressed(topic),
-                  onLongPress: () => _onTopicLongPressed(topic),
-                ),
-              );
-            },
-          ),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+              child: ListTile(
+                title: Text(topic.title),
+                trailing: multiSelectionMode
+                    ? BooleanCircleIndicator(
+                        value: _selectedTopics[topic.id] ?? false,
+                      )
+                    : IconButton(
+                        onPressed: () => _editTopic(topic),
+                        icon: const Icon(Icons.edit),
+                      ),
+                onTap: () => _onTopicPressed(topic),
+                onLongPress: () => _onTopicLongPressed(topic),
+              ),
+            );
+          },
         ),
       ],
     );

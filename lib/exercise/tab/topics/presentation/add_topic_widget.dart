@@ -53,7 +53,9 @@ class _AddTopicWidgetState extends State<AddTopicWidget> {
         TextField(
           controller: _titleController,
           keyboardType: TextInputType.multiline,
-          maxLines: null,
+          minLines: 1,
+          maxLines: 3,
+          scrollPadding: const EdgeInsets.only(bottom: 80),
           decoration: InputDecoration(
             hintText: context.t.topics.titleHint,
             border: const OutlineInputBorder(
@@ -65,7 +67,9 @@ class _AddTopicWidgetState extends State<AddTopicWidget> {
         TextField(
           controller: _contentController,
           keyboardType: TextInputType.multiline,
-          maxLines: null,
+          minLines: 1,
+          maxLines: 6,
+          scrollPadding: const EdgeInsets.only(bottom: 80),
           decoration: InputDecoration(
             hintText: context.t.topics.contentHint,
             border: const OutlineInputBorder(

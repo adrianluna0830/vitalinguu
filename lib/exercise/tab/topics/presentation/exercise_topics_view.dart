@@ -36,49 +36,45 @@ class _ExerciseTopicsViewState extends State<ExerciseTopicsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: ListView(
           padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outline,
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.info_outline),
-                    const SizedBox(width: 8),
-                    Expanded(child: Text(context.t.topics.writingGuide)),
-                  ],
-                ),
+                borderRadius: BorderRadius.circular(8),
               ),
-              const SizedBox(height: 8),
-              AddTopicsSwitcherWidget(
-                onTopicChanged: (topic) =>
-                    unawaited(_viewModel.addTopic(topic)),
-                onTopicsChanged: (topics) =>
-                    unawaited(_viewModel.addTopics(topics)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(Icons.info_outline),
+                  const SizedBox(width: 8),
+                  Expanded(child: Text(context.t.topics.writingGuide)),
+                ],
               ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: SignalBuilder(
-                  builder: (context) => TopicsListWidget(
-                    topics: _viewModel.topics.value,
-                    onChanged: (topicId, topic) =>
-                        unawaited(_viewModel.updateTopic(topicId, topic)),
-                    onDelete: (topicIds) =>
-                        unawaited(_viewModel.deleteTopics(topicIds)),
-                  ),
-                ),
+            ),
+            const SizedBox(height: 8),
+            AddTopicsSwitcherWidget(
+              onTopicChanged: (topic) => unawaited(_viewModel.addTopic(topic)),
+              onTopicsChanged: (topics) =>
+                  unawaited(_viewModel.addTopics(topics)),
+            ),
+            const SizedBox(height: 8),
+            SignalBuilder(
+              builder: (context) => TopicsListWidget(
+                topics: _viewModel.topics.value,
+                onChanged: (topicId, topic) =>
+                    unawaited(_viewModel.updateTopic(topicId, topic)),
+                onDelete: (topicIds) =>
+                    unawaited(_viewModel.deleteTopics(topicIds)),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
