@@ -105,7 +105,8 @@ String _buildExercisePlanPrompt({
 }) {
   final requestedExercises = [
     for (var index = 0; index < exercises.length; index++)
-      '$index: ${exercises[index].name}',
+      '''$index: ${exercises[index].name}
+   Interaction contract: ${_exerciseTypePlanningContract(exercises[index])}''',
   ].join('\n');
   final feedback = userPreviousFeedback.isEmpty
       ? 'No previous learning feedback is available.'
@@ -137,6 +138,15 @@ English and explicitly tailor it to the exercise type at that index. Each
 prompt must be a self-contained generation brief with a distinct context,
 setting when useful, learning objective, skill focus, and suitable difficulty.
 
+For every planned exercise, describe only interactions supported by its
+interaction contract. The brief must state what the learner will see, what
+action the learner will perform, and how the response will be evaluated. These
+three elements must agree with the interaction contract of the requested type.
+
+Never use interface language belonging to another exercise type. For example,
+do not mention blanks in a dialog, selecting options in a writing exercise, or
+matching elements in a multiple-choice exercise.
+
 The title and content are the primary source for the subject matter and may
 also contain suggestions, preferences, examples, or instructions about how an
 exercise should be designed. Apply each such suggestion only to an exercise
@@ -148,6 +158,11 @@ suggestion that is irrelevant, unsuitable, impossible to represent, or would
 change the requested exercise type, introduce an unsupported answer mode, or
 conflict with another requirement. Even when ignoring a suggestion, retain
 the useful topic subject matter.
+
+If the topic recommends an incompatible activity, do not simulate that
+activity using another exercise type. Ignore the recommendation and choose a
+different way to practice the same learning objective that genuinely fits the
+requested type.
 
 When a feedback note reveals a weakness that can naturally be practiced within
 this topic and an exercise type, incorporate that weakness as a reinforcement
@@ -162,6 +177,41 @@ write the finished exercises or their answers; write only the specific briefs
 that the corresponding exercise generators will use.
 ''';
 }
+
+String _exerciseTypePlanningContract(ExerciseType type) => switch (type) {
+  ExerciseType.dialog =>
+    'A multi-turn, open-ended conversation. The learner responds with natural '
+        'free-form messages. It has no blanks, draggable elements, selectable '
+        'options, matching controls, or predetermined exact answers. Practice '
+        'the topic through a genuine communicative situation.',
+  ExerciseType.fillTheBlank =>
+    'A sentence or passage split into visible text and one or more blanks. The '
+        'learner types the exact missing text for each blank; optional hints '
+        'may guide those entries.',
+  ExerciseType.matchElements =>
+    'A set of unambiguous pairs. The learner matches every unique left element '
+        'to exactly one corresponding right element.',
+  ExerciseType.multipleChoice =>
+    'One question with exactly one correct answer and three incorrect options. '
+        'The learner selects a single option.',
+  ExerciseType.multipleChoiceList =>
+    'A list of two to five distinct questions, each with exactly one correct '
+        'answer and three incorrect options. The learner selects one option '
+        'for every question.',
+  ExerciseType.selectAllThatApply =>
+    'One question with multiple options and at least one correct and one '
+        'incorrect choice. The learner selects every option that applies.',
+  ExerciseType.wordOrdering =>
+    'One sentence divided into ordered word tokens. The learner reconstructs '
+        'the sentence by arranging the tokens in the correct order.',
+  ExerciseType.write =>
+    'One open-ended writing task. The learner types one free-form response '
+        'that is evaluated against the stated communicative and language '
+        'requirements.',
+  ExerciseType.writeList =>
+    'A list of two to five open-ended writing requests. The learner types one '
+        'separate free-form response for every request.',
+};
 
 OneOf2<List<_GeneratedPlannedExercise>, SchemaValidationError>
 _exercisePlanFromJson(

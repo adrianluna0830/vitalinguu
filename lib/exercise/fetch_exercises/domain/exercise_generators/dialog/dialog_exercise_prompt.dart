@@ -30,6 +30,19 @@ the topic without merely restating it. The challenge, vocabulary, social
 register, and communicative objective must suit the CEFR level. Write
 exerciseTask in the learning language.
 
+A DIALOG exercise must be a genuine multi-turn communicative exchange. The
+learner responds through free-form messages; there are no blanks, selectable
+answers, matching controls, draggable tokens, or separately displayed
+questions.
+
+Never tell the learner to fill blanks, choose an option, match elements, order
+words, or provide a predetermined one-word answer. If the brief requests one
+of those interactions, preserve its learning objective but redesign it as a
+natural conversation.
+
+exerciseTask must describe exactly what will happen during the conversation
+and exactly how the learner is expected to participate.
+
 exerciseTask must be one concise instruction containing only the situation, the
 learner's role, the communicative goal, and any necessary constraint. Never
 include an example or model conversation, speaker turns, sample phrases,
