@@ -1,5 +1,7 @@
 part of '../../exercise_view_model.dart';
 
+const _dialogBotMessageDelay = Duration(seconds: 3);
+
 mixin DialogExerciseEvaluatorMixin
     on
         ExerciseViewModelStateMixin,
@@ -124,10 +126,7 @@ mixin DialogExerciseEvaluatorMixin
     }
     if (!identical(_exerciseStateSignal.value, pendingState)) return;
 
-    _exerciseStateSignal.value = pendingState.copyWith(
-      isTyping: false,
-      messages: [...pendingState.messages, ...botMessages],
-    );
+    await _appendDialogBotMessages(pendingState, botMessages);
   }
 
   Future<void> sendDialogMessage(String message) async {
@@ -188,11 +187,14 @@ mixin DialogExerciseEvaluatorMixin
 
     final generatedFeedback = generated.userFeedback!;
     final feedback = _toDialogUserFeedback(generatedFeedback);
-    final finalMessages = <DialogMessage>[
-      ...pendingState.messages.take(pendingState.messages.length - 1),
-      User(message: learnerMessage, feedback: feedback),
-      ...botMessages,
-    ];
+    final feedbackState = pendingState.copyWith(
+      isTyping: true,
+      messages: <DialogMessage>[
+        ...pendingState.messages.take(pendingState.messages.length - 1),
+        User(message: learnerMessage, feedback: feedback),
+      ],
+    );
+    _exerciseStateSignal.value = feedbackState;
 
     if (feedback is! GoodFeedback) {
       _recordIncorrectAnswer(
@@ -210,10 +212,31 @@ mixin DialogExerciseEvaluatorMixin
       );
     }
 
-    _exerciseStateSignal.value = pendingState.copyWith(
-      isTyping: false,
-      messages: finalMessages,
-    );
+    await _appendDialogBotMessages(feedbackState, botMessages);
+  }
+
+  Future<void> _appendDialogBotMessages(
+    DialogExerciseState pendingState,
+    List<Bot> botMessages,
+  ) async {
+    var currentState = pendingState;
+
+    for (var index = 0; index < botMessages.length; index++) {
+      if (!identical(_exerciseStateSignal.value, currentState)) return;
+
+      currentState = currentState.copyWith(
+        isTyping: true,
+        messages: [...currentState.messages, botMessages[index]],
+      );
+      _exerciseStateSignal.value = currentState;
+
+      if (index < botMessages.length - 1) {
+        await Future<void>.delayed(_dialogBotMessageDelay);
+      }
+    }
+
+    if (!identical(_exerciseStateSignal.value, currentState)) return;
+    _exerciseStateSignal.value = currentState.copyWith(isTyping: false);
   }
 
   void _validateDialogParticipants(List<String> participantNames) {
