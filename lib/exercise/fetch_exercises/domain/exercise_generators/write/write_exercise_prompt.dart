@@ -21,6 +21,8 @@ CEFR level: ${level.name.toUpperCase()}
 
 ${_exerciseOutputLanguageGuidance(learningLanguage: learningLanguage, nativeLanguage: nativeLanguage)}
 
+$_exerciseTopicSuggestionGuidance
+
 Mandatory CEFR guidance:
 ${_cefrLanguageGuidance(level)}
 
