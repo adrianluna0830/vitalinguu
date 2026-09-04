@@ -2,22 +2,23 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:vitalinguu/core/data/implementations/nano_gpt/nano_gpt_api_key_validator.dart';
+import 'package:vitalinguu/core/domain/interfaces/i_text_to_speech.dart';
 import 'package:vitalinguu/core/domain/models/audio_encoding.dart';
 import 'package:vitalinguu/core/domain/models/language_locale.dart';
-import 'package:vitalinguu/core/domain/interfaces/i_text_to_speech.dart';
-import 'package:vitalinguu/core/data/implementations/nano_gpt/nano_gpt_api_key_validator.dart';
 
 class NanoGptTextToSpeech extends ITextToSpeech {
-  static final _url = Uri.parse('https://nano-gpt.com/api/v1/audio/speech');
+  static final _url = Uri.parse(
+    'https://nano-gpt.com/api/v1/audio/speech',
+  );
 
   static const _model = 'inworld-tts-1.5-mini';
-  static const _voice = 'Dennis';
-  static const _timeout = Duration(seconds: 60);
+  static const _timeout = Duration(seconds: 100);
 
   final String _apiKey;
 
   NanoGptTextToSpeech({required String apiKey})
-    : _apiKey = requireApiKey(apiKey);
+      : _apiKey = requireApiKey(apiKey);
 
   @override
   Future<TextToSpeechResult> synthesize({
@@ -26,6 +27,8 @@ class NanoGptTextToSpeech extends ITextToSpeech {
     double speed = 1.0,
   }) async {
     final http.Response response;
+    final voice = _voiceFor(languageLocale);
+
     try {
       response = await http
           .post(
@@ -38,7 +41,7 @@ class NanoGptTextToSpeech extends ITextToSpeech {
             body: jsonEncode({
               'model': _model,
               'input': text,
-              'voice': _voice,
+              'voice': voice,
               'response_format': 'mp3',
               'speed': speed,
             }),
@@ -74,6 +77,15 @@ class NanoGptTextToSpeech extends ITextToSpeech {
     );
   }
 
+  String _voiceFor(LanguageLocale locale) => switch (locale) {
+        LanguageLocale.en => 'Dennis',
+        LanguageLocale.es => 'Lupita',
+        LanguageLocale.de => 'Johanna',
+        LanguageLocale.pt => 'Maitê',
+        LanguageLocale.fr => 'Hélène',
+        LanguageLocale.it => 'Gianni',
+      };
+
   TextToSpeechFailure _failureFrom(http.Response response) {
     final message = _errorMessage(response);
 
@@ -86,11 +98,16 @@ class NanoGptTextToSpeech extends ITextToSpeech {
   }
 
   String _errorMessage(http.Response response) {
-    final body = utf8.decode(response.bodyBytes, allowMalformed: true);
+    final body = utf8.decode(
+      response.bodyBytes,
+      allowMalformed: true,
+    );
+
     var message = body.trim();
 
     try {
       final decoded = jsonDecode(body);
+
       message = switch (decoded) {
         {'error': {'message': final Object value}} => value.toString(),
         {'error': final String value} => value,
