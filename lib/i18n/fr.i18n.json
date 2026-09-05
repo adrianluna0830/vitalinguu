@@ -74,6 +74,7 @@
     "availableTopics": "Thèmes disponibles",
     "noAvailableTopics": "Aucun thème disponible",
     "minimumCredit": "Vous devez disposer de plus de {amount} USD de crédit pour continuer.",
+    "unauthorizedCredit": "Vous ne pouvez pas continuer, car votre crédit n’a pas pu être autorisé. Vérifiez votre clé API dans les paramètres.",
     "types": {
       "dialog": "Dialogue",
       "fillTheBlank": "Compléter les blancs",

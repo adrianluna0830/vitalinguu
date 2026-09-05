@@ -302,6 +302,9 @@ class Translations$exerciseSetup$en {
 	/// en: 'You need more than {amount} USD in credit to continue.'
 	String minimumCredit({required Object amount}) => 'You need more than ${amount} USD in credit to continue.';
 
+	/// en: 'You can't continue because your credit could not be authorized. Check your API key in Settings.'
+	String get unauthorizedCredit => 'You can\'t continue because your credit could not be authorized. Check your API key in Settings.';
+
 	late final Translations$exerciseSetup$types$en types = Translations$exerciseSetup$types$en._(_root);
 }
 
@@ -536,6 +539,7 @@ extension on Translations {
 			'exerciseSetup.availableTopics' => 'Available topics',
 			'exerciseSetup.noAvailableTopics' => 'No topics available',
 			'exerciseSetup.minimumCredit' => ({required Object amount}) => 'You need more than ${amount} USD in credit to continue.',
+			'exerciseSetup.unauthorizedCredit' => 'You can\'t continue because your credit could not be authorized. Check your API key in Settings.',
 			'exerciseSetup.types.dialog' => 'Dialogue',
 			'exerciseSetup.types.fillTheBlank' => 'Fill in the blanks',
 			'exerciseSetup.types.matchElements' => 'Match elements',

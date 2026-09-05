@@ -215,53 +215,62 @@ class _DialogMessageListState extends State<DialogMessageList> {
     final answerResult = _answerResult;
     final showTyping = widget.isTyping && answerResult == null;
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ExercisePromptDisplay(
-            exerciseContent: null,
-            exerciseTask: widget.exerciseTask,
-            contentTranslationState: null,
-            onContentTranslationRequested: () {},
-            taskTranslationState: widget.translations[TranslationKeys.task],
-            onTaskTranslationRequested: () {
-              widget.onTranslate(
-                TranslationKeys.task,
-                widget.exerciseTask.exerciseTask,
-              );
-            },
-          ),
-          const SizedBox(height: 8),
-          for (var index = 0; index < widget.messages.length; index++)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: DialogMessageWidget(
-                key: ValueKey(TranslationKeys.dialogMessage(index)),
-                message: widget.messages[index],
-                translationState:
-                    widget.translations[TranslationKeys.dialogMessage(index)],
-                onTranslationRequested: () {
-                  final message = widget.messages[index];
-                  if (message is Bot) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ExercisePromptDisplay(
+                  exerciseContent: null,
+                  exerciseTask: widget.exerciseTask,
+                  contentTranslationState: null,
+                  onContentTranslationRequested: () {},
+                  taskTranslationState:
+                      widget.translations[TranslationKeys.task],
+                  onTaskTranslationRequested: () {
                     widget.onTranslate(
-                      TranslationKeys.dialogMessage(index),
-                      message.message,
+                      TranslationKeys.task,
+                      widget.exerciseTask.exerciseTask,
                     );
-                  }
-                },
-              ),
+                  },
+                ),
+                const SizedBox(height: 8),
+                for (var index = 0; index < widget.messages.length; index++)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: DialogMessageWidget(
+                      key: ValueKey(TranslationKeys.dialogMessage(index)),
+                      message: widget.messages[index],
+                      translationState: widget
+                          .translations[TranslationKeys.dialogMessage(index)],
+                      onTranslationRequested: () {
+                        final message = widget.messages[index];
+                        if (message is Bot) {
+                          widget.onTranslate(
+                            TranslationKeys.dialogMessage(index),
+                            message.message,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                if (showTyping) const BotTypingMessage(),
+              ],
             ),
-          if (answerResult != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: _answerWidget(answerResult),
-            ),
-          if (answerResult != null)
-            NextExerciseButton(onPressed: widget.onNextExercise),
-          if (showTyping) const BotTypingMessage(),
+          ),
+        ),
+        if (answerResult != null) ...[
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: _answerWidget(answerResult),
+          ),
+          NextExerciseButton(onPressed: widget.onNextExercise),
         ],
-      ),
+      ],
     );
   }
 }

@@ -187,6 +187,7 @@ class _Translations$exerciseSetup$pt_BR implements Translations$exerciseSetup$en
 	@override String get availableTopics => 'Tópicos disponíveis';
 	@override String get noAvailableTopics => 'Não há tópicos disponíveis';
 	@override String minimumCredit({required Object amount}) => 'Você precisa ter mais de ${amount} USD em créditos para continuar.';
+	@override String get unauthorizedCredit => 'Não é possível continuar porque não foi possível autorizar seu crédito. Verifique sua chave de API nas configurações.';
 	@override late final _Translations$exerciseSetup$types$pt_BR types = _Translations$exerciseSetup$types$pt_BR._(_root);
 }
 
@@ -349,6 +350,7 @@ extension on TranslationsPtBr {
 			'exerciseSetup.availableTopics' => 'Tópicos disponíveis',
 			'exerciseSetup.noAvailableTopics' => 'Não há tópicos disponíveis',
 			'exerciseSetup.minimumCredit' => ({required Object amount}) => 'Você precisa ter mais de ${amount} USD em créditos para continuar.',
+			'exerciseSetup.unauthorizedCredit' => 'Não é possível continuar porque não foi possível autorizar seu crédito. Verifique sua chave de API nas configurações.',
 			'exerciseSetup.types.dialog' => 'Diálogo',
 			'exerciseSetup.types.fillTheBlank' => 'Preencher lacunas',
 			'exerciseSetup.types.matchElements' => 'Relacionar elementos',

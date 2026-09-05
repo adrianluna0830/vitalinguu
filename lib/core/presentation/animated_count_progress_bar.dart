@@ -15,6 +15,9 @@ class AnimatedCountProgressBar extends StatelessWidget {
     final ratio = totalCount <= 0
         ? 0.0
         : (currentCount / totalCount).clamp(0.0, 1.0);
+    final progressColor = ColoredBox(
+      color: Theme.of(context).colorScheme.primary,
+    );
 
     return SizedBox(
       height: 8,
@@ -24,17 +27,24 @@ class AnimatedCountProgressBar extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             ColoredBox(color: Colors.grey.shade300),
-            TweenAnimationBuilder<double>(
-              tween: Tween(end: ratio),
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeOut,
-              builder: (context, value, child) => FractionallySizedBox(
+            if (ratio == 0)
+              FractionallySizedBox(
                 alignment: Alignment.centerLeft,
-                widthFactor: value,
-                child: child,
+                widthFactor: 0,
+                child: progressColor,
+              )
+            else
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: ratio),
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeOut,
+                builder: (context, value, child) => FractionallySizedBox(
+                  alignment: Alignment.centerLeft,
+                  widthFactor: value,
+                  child: child,
+                ),
+                child: progressColor,
               ),
-              child: ColoredBox(color: Theme.of(context).colorScheme.primary),
-            ),
           ],
         ),
       ),

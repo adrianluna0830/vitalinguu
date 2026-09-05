@@ -74,6 +74,7 @@
     "availableTopics": "Argomenti disponibili",
     "noAvailableTopics": "Nessun argomento disponibile",
     "minimumCredit": "Devi avere più di {amount} USD di credito per continuare.",
+    "unauthorizedCredit": "Non puoi continuare perché non è stato possibile autorizzare il credito. Controlla la chiave API nelle impostazioni.",
     "types": {
       "dialog": "Dialogo",
       "fillTheBlank": "Completa gli spazi",

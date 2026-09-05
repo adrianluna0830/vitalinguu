@@ -187,6 +187,7 @@ class _Translations$exerciseSetup$it implements Translations$exerciseSetup$en {
 	@override String get availableTopics => 'Argomenti disponibili';
 	@override String get noAvailableTopics => 'Nessun argomento disponibile';
 	@override String minimumCredit({required Object amount}) => 'Devi avere più di ${amount} USD di credito per continuare.';
+	@override String get unauthorizedCredit => 'Non puoi continuare perché non è stato possibile autorizzare il credito. Controlla la chiave API nelle impostazioni.';
 	@override late final _Translations$exerciseSetup$types$it types = _Translations$exerciseSetup$types$it._(_root);
 }
 
@@ -349,6 +350,7 @@ extension on TranslationsIt {
 			'exerciseSetup.availableTopics' => 'Argomenti disponibili',
 			'exerciseSetup.noAvailableTopics' => 'Nessun argomento disponibile',
 			'exerciseSetup.minimumCredit' => ({required Object amount}) => 'Devi avere più di ${amount} USD di credito per continuare.',
+			'exerciseSetup.unauthorizedCredit' => 'Non puoi continuare perché non è stato possibile autorizzare il credito. Controlla la chiave API nelle impostazioni.',
 			'exerciseSetup.types.dialog' => 'Dialogo',
 			'exerciseSetup.types.fillTheBlank' => 'Completa gli spazi',
 			'exerciseSetup.types.matchElements' => 'Abbina gli elementi',

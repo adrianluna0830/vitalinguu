@@ -74,6 +74,7 @@
     "availableTopics": "Available topics",
     "noAvailableTopics": "No topics available",
     "minimumCredit": "You need more than {amount} USD in credit to continue.",
+    "unauthorizedCredit": "You can't continue because your credit could not be authorized. Check your API key in Settings.",
     "types": {
       "dialog": "Dialogue",
       "fillTheBlank": "Fill in the blanks",

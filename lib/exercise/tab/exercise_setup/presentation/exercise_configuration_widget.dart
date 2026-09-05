@@ -53,6 +53,9 @@ class _ExerciseConfigurationWidgetState
     CreditBalanceStateUnavailable() => false,
   };
 
+  bool get _isCreditUnauthorized =>
+      widget.creditBalanceState is CreditBalanceStateUnauthorized;
+
   bool get _canContinue =>
       _hasSufficientCredit &&
       _promptConfiguration != null &&
@@ -135,6 +138,14 @@ class _ExerciseConfigurationWidgetState
             child: Text(context.t.common.kContinue),
           ),
         ),
+        if (_isCreditUnauthorized) ...[
+          const SizedBox(height: 8),
+          Text(
+            context.t.exerciseSetup.unauthorizedCredit,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          ),
+        ],
       ],
     );
   }

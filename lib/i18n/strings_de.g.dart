@@ -187,6 +187,7 @@ class _Translations$exerciseSetup$de implements Translations$exerciseSetup$en {
 	@override String get availableTopics => 'Verfügbare Themen';
 	@override String get noAvailableTopics => 'Keine Themen verfügbar';
 	@override String minimumCredit({required Object amount}) => 'Du brauchst mehr als ${amount} USD Guthaben, um fortzufahren.';
+	@override String get unauthorizedCredit => 'Du kannst nicht fortfahren, weil dein Guthaben nicht autorisiert werden konnte. Überprüfe deinen API-Schlüssel in den Einstellungen.';
 	@override late final _Translations$exerciseSetup$types$de types = _Translations$exerciseSetup$types$de._(_root);
 }
 
@@ -349,6 +350,7 @@ extension on TranslationsDe {
 			'exerciseSetup.availableTopics' => 'Verfügbare Themen',
 			'exerciseSetup.noAvailableTopics' => 'Keine Themen verfügbar',
 			'exerciseSetup.minimumCredit' => ({required Object amount}) => 'Du brauchst mehr als ${amount} USD Guthaben, um fortzufahren.',
+			'exerciseSetup.unauthorizedCredit' => 'Du kannst nicht fortfahren, weil dein Guthaben nicht autorisiert werden konnte. Überprüfe deinen API-Schlüssel in den Einstellungen.',
 			'exerciseSetup.types.dialog' => 'Dialog',
 			'exerciseSetup.types.fillTheBlank' => 'Lücken ausfüllen',
 			'exerciseSetup.types.matchElements' => 'Elemente zuordnen',

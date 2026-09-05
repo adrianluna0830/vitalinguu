@@ -74,6 +74,7 @@
     "availableTopics": "Verfügbare Themen",
     "noAvailableTopics": "Keine Themen verfügbar",
     "minimumCredit": "Du brauchst mehr als {amount} USD Guthaben, um fortzufahren.",
+    "unauthorizedCredit": "Du kannst nicht fortfahren, weil dein Guthaben nicht autorisiert werden konnte. Überprüfe deinen API-Schlüssel in den Einstellungen.",
     "types": {
       "dialog": "Dialog",
       "fillTheBlank": "Lücken ausfüllen",
