@@ -30,7 +30,7 @@ class _FetchTopicsFeedbackViewState extends State<FetchTopicsFeedbackView>
     _viewModel = getIt<FetchTopicsFeedbackViewModel>();
     _feedbackFetchedSubscription = _viewModel.feedbackFetched.listen((_) {
       if (mounted) {
-        unawaited(context.router.push(const TopicsFeedbackRoute()));
+        unawaited(context.router.replace(const ExerciseCompletionRoute()));
       }
     });
     listenToAIErrorStream(

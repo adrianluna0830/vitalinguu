@@ -72,7 +72,7 @@ class _ExerciseSetupViewState extends State<ExerciseSetupView> {
                         );
 
                         if (context.mounted) {
-                          await context.router.root.push(
+                          await context.router.root.replace(
                             const FetchExercisesRoute(),
                           );
                         }

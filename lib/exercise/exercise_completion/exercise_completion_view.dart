@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:vitalinguu/core/domain/session_manager.dart';
 import 'package:vitalinguu/core/presentation/app_router.gr.dart';
-import 'package:vitalinguu/exercise/fetch_exercises/domain/fetch_exercises_view_model.dart';
 import 'package:vitalinguu/i18n/strings.g.dart';
 
 @RoutePage()
-class TopicsFeedbackView extends StatelessWidget {
-  const TopicsFeedbackView({super.key});
+class ExerciseCompletionView extends StatelessWidget {
+  const ExerciseCompletionView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +34,10 @@ class TopicsFeedbackView extends StatelessWidget {
                         width: double.infinity,
                         child: FilledButton.icon(
                           onPressed: () {
-                            context.router.popUntilRouteWithName(
-                              FetchExercisesRoute.name,
-                            );
                             unawaited(
-                              getIt<FetchExercisesViewModel>().fetchExercises(),
+                              context.router.root.replace(
+                                const FetchExercisesRoute(),
+                              ),
                             );
                           },
                           icon: const Icon(Icons.refresh),

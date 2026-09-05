@@ -45,7 +45,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: FetchExercisesRoute.page),
     AutoRoute(page: FetchTopicsFeedbackRoute.page),
     AutoRoute(page: ExerciseRoute.page),
-    AutoRoute(page: TopicsFeedbackRoute.page),
+    AutoRoute(page: ExerciseCompletionRoute.page),
   ];
 }
 

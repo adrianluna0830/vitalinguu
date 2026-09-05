@@ -39,7 +39,7 @@ class _ExerciseViewState extends State<ExerciseView>
     viewModel = getIt<ExerciseViewModel>();
     _exercisesFinishedSubscription = viewModel.exercisesFinished.listen((_) {
       if (mounted) {
-        unawaited(context.router.push(const FetchTopicsFeedbackRoute()));
+        unawaited(context.router.replace(const FetchTopicsFeedbackRoute()));
       }
     });
     listenToAIErrorStream(

@@ -28,7 +28,7 @@ class _FetchExercisesViewState extends State<FetchExercisesView>
     super.initState();
     _viewModel = getIt<FetchExercisesViewModel>();
     _exercisesFetchedSubscription = _viewModel.exercisesFetched.listen((_) {
-      if (mounted) unawaited(context.router.push(const ExerciseRoute()));
+      if (mounted) unawaited(context.router.replace(const ExerciseRoute()));
     });
     listenToAIErrorStream(
       errorHandler: _viewModel,
