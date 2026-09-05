@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:logger/logger.dart';
 import 'package:vitalinguu/core/data/implementations/audio_players_player.dart';
 import 'package:vitalinguu/core/domain/credit/credit_balance_store.dart';
 import 'package:vitalinguu/core/data/implementations/global_audio_player.dart';
@@ -57,6 +58,17 @@ class SessionManager {
   }
 
   Future<void> _registerBaseDependencies() async {
+    getIt.registerLazySingleton<Logger>(
+      () => Logger(
+        filter: null,
+        printer: PrettyPrinter(
+          methodCount: 0,
+          errorMethodCount: 8,
+          dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
+        ),
+      ),
+    );
+
     getIt.registerSingleton<GlobalAudioPlayer>(
       GlobalAudioPlayer(AudioPlayersPlayer()),
     );
@@ -147,6 +159,7 @@ class SessionManager {
         textToSpeech: getIt(),
         exercises: exercises,
         sessionManager: this,
+        logger: getIt(),
         level: level,
         nativeLanguage: nativeLanguage,
         learningLanguage: learningLanguage,
@@ -262,7 +275,9 @@ class SessionManager {
       await getIt.unregister<ITextToSpeech>();
     }
 
-    getIt.registerLazySingleton<IAI>(() => NanoGptAI(apiKey: apiKey));
+    getIt.registerLazySingleton<IAI>(
+      () => NanoGptAI(apiKey: apiKey, logger: getIt()),
+    );
     getIt.registerLazySingleton<ISpeechToText>(
       () => NanoGptSpeechToText(apiKey: apiKey),
     );

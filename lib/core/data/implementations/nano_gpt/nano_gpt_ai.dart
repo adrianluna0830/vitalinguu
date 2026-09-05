@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:vitalinguu/core/domain/interfaces/i_ai.dart';
 import 'package:vitalinguu/core/domain/interfaces/i_structured_output.dart';
 import 'package:vitalinguu/core/domain/one_of.dart';
@@ -19,8 +19,9 @@ class NanoGptAI implements IAI {
   );
 
   final String apiKey;
+  final Logger _logger;
 
-  NanoGptAI({required this.apiKey});
+  NanoGptAI({required this.apiKey, required Logger logger}) : _logger = logger;
 
   @override
   Future<OneOf2<String, AIError>> generateResponse(
@@ -65,24 +66,22 @@ class NanoGptAI implements IAI {
     AISchema<T> schema,
     String? systemInstruction,
   ) async {
-    final stopwatch = Stopwatch()..start();
-    debugPrint(
-      '[0.00s] Iniciando generateStructuredResponse '
-      'con tipo de salida ${T.toString()}',
-    );
+    _logger.d('Preparing a structured response of type ${T.toString()}.');
 
     final ISchema outputSchema;
     try {
       outputSchema = schema.schema;
-    } on Object catch (error) {
-      return _logStructuredResponseResult(
-        OneOf2.second(
-          RequestConfigurationError(
-            message: 'Could not obtain the structured-output schema: $error',
-          ),
-        ),
-        stopwatch,
+    } on Object catch (error, stackTrace) {
+      final failure = RequestConfigurationError(
+        message: 'Could not obtain the structured-output schema: $error',
       );
+      _logger.e(
+        'Failed to obtain the schema for structured response type '
+        '${T.toString()}.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return OneOf2.second(failure);
     }
 
     final response = await _generateContent(
@@ -92,39 +91,11 @@ class NanoGptAI implements IAI {
       schema: outputSchema,
     );
 
-    final result = response.when<OneOf2<T, AIError>>(
+    return response.when<OneOf2<T, AIError>>(
       first: (content) =>
           _decodeStructuredContent(content, schema, outputSchema),
       second: OneOf2<T, AIError>.second,
     );
-
-    return _logStructuredResponseResult(result, stopwatch);
-  }
-
-  OneOf2<T, AIError> _logStructuredResponseResult<T>(
-    OneOf2<T, AIError> result,
-    Stopwatch stopwatch,
-  ) {
-    stopwatch.stop();
-    final elapsed = _formatElapsed(stopwatch.elapsed);
-
-    result.when<void>(
-      first: (_) {
-        debugPrint(
-          '[${elapsed}s] Terminando exitosamente generateStructuredResponse '
-          'con tipo de salida ${T.toString()}',
-        );
-      },
-      second: (error) {
-        debugPrint(
-          '[${elapsed}s] Terminando con error de tipo ${error.runtimeType} '
-          'con contenido de error: ${error.message} en '
-          'generateStructuredResponse con tipo de salida ${T.toString()}',
-        );
-      },
-    );
-
-    return result;
   }
 
   String _formatElapsed(Duration elapsed) {
@@ -140,11 +111,22 @@ class NanoGptAI implements IAI {
     required String? systemInstruction,
     ISchema? schema,
   }) async {
+    final stopwatch = Stopwatch()..start();
+    final expectsStructuredOutput = schema != null;
+    _logger.d(
+      'Preparing NanoGPT request. '
+      'Model: $_model; structured response: $expectsStructuredOutput; '
+      'previous messages: ${messages.length}.',
+    );
+
     if (apiKey.trim().isEmpty) {
-      return OneOf2.second(
-        const AuthenticationError(message: 'A NanoGPT API key is required.'),
+      const failure = AuthenticationError(
+        message: 'A NanoGPT API key is required.',
       );
+      _logRequestFailure(failure, stopwatch.elapsed);
+      return OneOf2.second(failure);
     }
+
     Map<String, dynamic>? responseFormat;
     if (schema != null) {
       try {
@@ -155,12 +137,16 @@ class NanoGptAI implements IAI {
           );
         }
         responseFormat = value;
-      } on Object catch (error) {
-        return OneOf2.second(
-          RequestConfigurationError(
-            message: 'Could not create the NanoGPT response format: $error',
-          ),
+      } on Object catch (error, stackTrace) {
+        final failure = RequestConfigurationError(
+          message: 'Could not create the NanoGPT response format: $error',
         );
+        _logger.e(
+          'Failed to build the NanoGPT response format.',
+          error: error,
+          stackTrace: stackTrace,
+        );
+        return OneOf2.second(failure);
       }
     }
 
@@ -184,6 +170,9 @@ class NanoGptAI implements IAI {
     }
 
     try {
+      _logger.d(
+        'Sending NanoGPT request with ${requestMessages.length} messages.',
+      );
       final response = await http
           .post(
             _endpoint,
@@ -196,35 +185,102 @@ class NanoGptAI implements IAI {
           )
           .timeout(_timeout);
 
+      final requestId = _requestIdFromHeaders(response.headers);
+      _logger.t(
+        'Received NanoGPT HTTP response. '
+        'Status: ${response.statusCode}; bytes: ${response.bodyBytes.length}; '
+        'requestId: ${requestId ?? 'unavailable'}; '
+        'duration: ${_formatElapsed(stopwatch.elapsed)}s.',
+      );
+
       if (response.statusCode < 200 || response.statusCode >= 300) {
-        return OneOf2.second(
-          _classifyProviderError(
-            response.statusCode,
-            response.body,
-            expectsStructuredOutput: schema != null,
-            requestId: _requestIdFromHeaders(response.headers),
-          ),
+        final failure = _classifyProviderError(
+          response.statusCode,
+          response.body,
+          expectsStructuredOutput: expectsStructuredOutput,
+          requestId: requestId,
         );
+        _logRequestFailure(
+          failure,
+          stopwatch.elapsed,
+          statusCode: response.statusCode,
+        );
+        return OneOf2.second(failure);
       }
 
-      return _readResponseContent(
+      final result = _readResponseContent(
         response,
-        expectsStructuredOutput: schema != null,
+        expectsStructuredOutput: expectsStructuredOutput,
       );
-    } on TimeoutException catch (error) {
-      return OneOf2.second(
-        UnavailableError(message: 'The NanoGPT request timed out: $error'),
-      );
-    } on http.ClientException catch (error) {
-      return OneOf2.second(
-        UnavailableError(
-          message: 'Could not connect to the NanoGPT API: $error',
+      result.when<void>(
+        first: (_) => _logger.i(
+          'NanoGPT request completed successfully in '
+          '${_formatElapsed(stopwatch.elapsed)}s.',
+        ),
+        second: (failure) => _logRequestFailure(
+          failure,
+          stopwatch.elapsed,
+          statusCode: response.statusCode,
         ),
       );
-    } on Object catch (error) {
-      return OneOf2.second(
-        UnknownError(message: 'Unexpected NanoGPT client error: $error'),
+      return result;
+    } on TimeoutException catch (error, stackTrace) {
+      final failure = UnavailableError(
+        message: 'The NanoGPT request timed out: $error',
       );
+      _logger.w(
+        'NanoGPT request timed out after '
+        '${_formatElapsed(stopwatch.elapsed)}s.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return OneOf2.second(failure);
+    } on http.ClientException catch (error, stackTrace) {
+      final failure = UnavailableError(
+        message: 'Could not connect to the NanoGPT API: $error',
+      );
+      _logger.e(
+        'Failed to connect to NanoGPT after '
+        '${_formatElapsed(stopwatch.elapsed)}s.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return OneOf2.second(failure);
+    } on Object catch (error, stackTrace) {
+      final failure = UnknownError(
+        message: 'Unexpected NanoGPT client error: $error',
+      );
+      _logger.e(
+        'Unexpected NanoGPT client error after '
+        '${_formatElapsed(stopwatch.elapsed)}s.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return OneOf2.second(failure);
+    }
+  }
+
+  void _logRequestFailure(
+    AIError failure,
+    Duration elapsed, {
+    int? statusCode,
+  }) {
+    final message =
+        'NanoGPT request ended with ${failure.runtimeType} after '
+        '${_formatElapsed(elapsed)}s'
+        '${statusCode == null ? '' : ' (HTTP $statusCode)'}: '
+        '${failure.message}';
+
+    switch (failure) {
+      case AuthenticationError() ||
+          UsageLimitError() ||
+          UnavailableError() ||
+          RejectedError():
+        _logger.w(message);
+      case RequestConfigurationError() ||
+          SchemaValidationError() ||
+          UnknownError():
+        _logger.e(message);
     }
   }
 
@@ -304,6 +360,7 @@ class NanoGptAI implements IAI {
     AISchema<T> schema,
     ISchema outputSchema,
   ) {
+    _logger.t('Decoding ${content.length} characters as ${T.toString()}.');
     try {
       final decoded = jsonDecode(content);
       if (decoded is! Map<String, dynamic>) {
@@ -317,27 +374,44 @@ class NanoGptAI implements IAI {
       if (violations.isNotEmpty) {
         final details = violations.take(5).join('; ');
         final remaining = violations.length - 5;
-        return OneOf2.second(
-          SchemaValidationError(
-            message:
-                'The structured NanoGPT response does not match the schema: '
-                '$details${remaining > 0 ? '; and $remaining more' : ''}.',
-          ),
+        final failure = SchemaValidationError(
+          message:
+              'The structured NanoGPT response does not match the schema: '
+              '$details${remaining > 0 ? '; and $remaining more' : ''}.',
         );
+        _logger.w(
+          'Structured response does not match the ${T.toString()} schema. '
+          'Violations: ${violations.length}. Details: ${failure.message}',
+        );
+        return OneOf2.second(failure);
       }
 
-      return schema
+      final result = schema
           .fromJson(decoded)
           .when(
             first: OneOf2<T, AIError>.first,
             second: OneOf2<T, AIError>.second,
           );
-    } on Object catch (error) {
-      return OneOf2.second(
-        SchemaValidationError(
-          message: 'The structured NanoGPT response is invalid: $error',
+      result.when<void>(
+        first: (_) => _logger.i(
+          'Structured response converted to ${T.toString()} successfully.',
+        ),
+        second: (failure) => _logger.w(
+          'Failed to convert the structured response to ${T.toString()}: '
+          '${failure.message}',
         ),
       );
+      return result;
+    } on Object catch (error, stackTrace) {
+      final failure = SchemaValidationError(
+        message: 'The structured NanoGPT response is invalid: $error',
+      );
+      _logger.e(
+        'The ${T.toString()} structured response is not valid JSON.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return OneOf2.second(failure);
     }
   }
 

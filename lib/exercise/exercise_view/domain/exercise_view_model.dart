@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:logger/logger.dart';
 import 'package:signals/signals_core.dart';
 import 'package:vitalinguu/core/domain/ai_error_retry_mixin.dart';
 import 'package:vitalinguu/core/domain/interfaces/i_structured_output.dart';
@@ -105,6 +106,7 @@ mixin ExerciseViewModelStateMixin {
   late final IAI _ai;
   late final IAudioPlayer _audioPlayer;
   late final ITextToSpeech _textToSpeech;
+  late final Logger _logger;
   late final CEFR _level;
   late final LanguageLocale _nativeLanguage;
   late final LanguageLocale _learningLanguage;
@@ -113,12 +115,26 @@ mixin ExerciseViewModelStateMixin {
 
   void _recordIncorrectAnswer(ExerciseInput input, String answer) {
     final topicData = TopicData.fromExerciseInput(input);
-    _incorrectAnswersByTopic.putIfAbsent(topicData, () => []).add(answer);
+    final answers = _incorrectAnswersByTopic.putIfAbsent(topicData, () => []);
+    answers.add(answer);
+    _logger.d(
+      'Recorded an incorrect answer. Exercise type: ${input.runtimeType}; '
+      'topic incorrect-answer count: ${answers.length}.',
+    );
   }
 
   void _addIncorrectAnswers(ExerciseInput input, List<String> answers) {
     final topicData = TopicData.fromExerciseInput(input);
-    _incorrectAnswersByTopic.putIfAbsent(topicData, () => []).addAll(answers);
+    final recordedAnswers = _incorrectAnswersByTopic.putIfAbsent(
+      topicData,
+      () => [],
+    );
+    recordedAnswers.addAll(answers);
+    _logger.d(
+      'Recorded ${answers.length} incorrect answers. '
+      'Exercise type: ${input.runtimeType}; '
+      'topic incorrect-answer count: ${recordedAnswers.length}.',
+    );
   }
 }
 
@@ -156,10 +172,18 @@ class ExerciseViewModel
     final currentTranslation = state.translations[key];
     if (currentTranslation is TranslationLoading ||
         currentTranslation is TranslationSuccess) {
+      _logger.t(
+        'Skipped translation request because the key is already loading or '
+        'translated. Exercise index: ${state.currentIndex}; key: $key.',
+      );
       return;
     }
 
     final exerciseIndex = state.currentIndex;
+    _logger.d(
+      'Queued translation request. Exercise index: $exerciseIndex; '
+      'key: $key; source length: ${text.length}.',
+    );
     _setTranslationState(key, const TranslationLoading());
 
     final previousTranslation = _translationQueue;
@@ -168,8 +192,18 @@ class ExerciseViewModel
 
     try {
       await previousTranslation;
-      if (!_isCurrentTranslationRequest(exerciseIndex, key)) return;
+      if (!_isCurrentTranslationRequest(exerciseIndex, key)) {
+        _logger.t(
+          'Discarded queued translation request after the exercise changed. '
+          'Original exercise index: $exerciseIndex; key: $key.',
+        );
+        return;
+      }
 
+      _logger.d(
+        'Starting translation request. Exercise index: $exerciseIndex; '
+        'key: $key.',
+      );
       final generated = await generateResponse(
         _ai,
         _buildTranslationPrompt(
@@ -180,12 +214,22 @@ class ExerciseViewModel
         _translationSystemInstruction,
       );
 
-      if (!_isCurrentTranslationRequest(exerciseIndex, key)) return;
+      if (!_isCurrentTranslationRequest(exerciseIndex, key)) {
+        _logger.t(
+          'Discarded translation response after the exercise changed. '
+          'Original exercise index: $exerciseIndex; key: $key.',
+        );
+        return;
+      }
 
       generated.when<void>(
         first: (value) {
           final translation = value.trim();
           if (translation.isEmpty) {
+            _logger.w(
+              'Translation response was empty. '
+              'Exercise index: $exerciseIndex; key: $key.',
+            );
             _setTranslationState(
               key,
               TranslationFailure(
@@ -195,17 +239,35 @@ class ExerciseViewModel
             return;
           }
           _setTranslationState(key, TranslationSuccess(translation));
+          _logger.i(
+            'Translation completed. Exercise index: $exerciseIndex; '
+            'key: $key; translated length: ${translation.length}.',
+          );
         },
         second: (stopExecution) {
+          _logger.w(
+            'Translation stopped before completion. '
+            'Exercise index: $exerciseIndex; key: $key.',
+          );
           _setTranslationState(key, TranslationFailure(stopExecution));
         },
       );
-    } on Object catch (error) {
+    } on Object catch (error, stackTrace) {
+      _logger.e(
+        'Unexpected translation failure. '
+        'Exercise index: $exerciseIndex; key: $key.',
+        error: error,
+        stackTrace: stackTrace,
+      );
       if (_isCurrentTranslationRequest(exerciseIndex, key)) {
         _setTranslationState(key, TranslationFailure(error));
       }
     } finally {
       translationCompleted.complete();
+      _logger.t(
+        'Released translation queue slot. '
+        'Exercise index: $exerciseIndex; key: $key.',
+      );
     }
   }
 
@@ -217,6 +279,10 @@ class ExerciseViewModel
 
   void _setTranslationState(String key, TranslationState translationState) {
     final state = _exerciseStateSignal.value;
+    _logger.t(
+      'Updating translation state. Exercise index: ${state.currentIndex}; '
+      'key: $key; state: ${translationState.runtimeType}.',
+    );
     final translations = Map<String, TranslationState>.unmodifiable({
       ...state.translations,
       key: translationState,
@@ -249,11 +315,14 @@ class ExerciseViewModel
     required ITextToSpeech textToSpeech,
     required List<ExerciseInput> exercises,
     required SessionManager sessionManager,
+    required Logger logger,
     required CEFR level,
     required LanguageLocale nativeLanguage,
     required LanguageLocale learningLanguage,
   }) : _sessionManager = sessionManager {
+    _logger = logger;
     if (exercises.isEmpty) {
+      _logger.e('ExerciseViewModel initialization rejected an empty list.');
       throw ArgumentError('Exercises list cannot be empty.');
     }
 
@@ -275,13 +344,26 @@ class ExerciseViewModel
     _exerciseStateSignal = Signal<ExerciseState<ExerciseInput>>(
       _getNewExerciseState(_exercises.first, 0),
     );
+    _logger.i(
+      'ExerciseViewModel initialized with ${_exercises.length} exercises. '
+      'Initial type: ${_exercises.first.runtimeType}; '
+      'level: ${_level.name.toUpperCase()}; '
+      'learning language: ${_learningLanguage.bcp47}; '
+      'native language: ${_nativeLanguage.bcp47}.',
+    );
   }
 
   void nextExercise() {
     final currentState = _exerciseStateSignal.value;
     final hasNextExercise = currentState.exerciseNumber < exerciseCount;
+    _logger.d(
+      'Advancing exercise. Current index: ${currentState.currentIndex}; '
+      'current type: ${currentState.input.runtimeType}; '
+      'has next: $hasNextExercise.',
+    );
 
     if (!hasNextExercise) {
+      _logger.i('Last exercise completed; starting finalization.');
       unawaited(_finishExercises());
       return;
     }
@@ -290,18 +372,41 @@ class ExerciseViewModel
     final nextIndex = currentIndex + 1;
     final nextExercise = _exercises[nextIndex];
     _exerciseStateSignal.value = _getNewExerciseState(nextExercise, nextIndex);
+    _logger.i(
+      'Moved to exercise index $nextIndex of $exerciseCount. '
+      'Type: ${nextExercise.runtimeType}.',
+    );
 
     if (nextExercise is DialogInput && nextExercise.startWithTyping) {
+      _logger.d('Starting the initial dialog turn automatically.');
       unawaited(setInitialMessage());
     }
   }
 
   Future<void> _finishExercises() async {
-    await _sessionManager.registerFetchTopicsFeedbackViewModel(
-      _incorrectAnswersByTopic,
-      _level,
+    final incorrectAnswerCount = _incorrectAnswersByTopic.values.fold<int>(
+      0,
+      (total, answers) => total + answers.length,
     );
-    _exercisesFinishedController.add(null);
+    _logger.d(
+      'Finalizing exercise session. Topics: ${_incorrectAnswersByTopic.length}; '
+      'incorrect answers: $incorrectAnswerCount.',
+    );
+    try {
+      await _sessionManager.registerFetchTopicsFeedbackViewModel(
+        _incorrectAnswersByTopic,
+        _level,
+      );
+      _exercisesFinishedController.add(null);
+      _logger.i('Exercise session finalized and completion event emitted.');
+    } on Object catch (error, stackTrace) {
+      _logger.e(
+        'Exercise session finalization failed.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
   }
 }
 

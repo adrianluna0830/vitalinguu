@@ -50,6 +50,7 @@ dependencies:
   slang: ^4.19.0
   slang_flutter: ^4.19.0
   url_launcher: ^6.3.2
+  logger: ^2.7.0
 
 dev_dependencies:
   flutter_test:

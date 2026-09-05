@@ -5,16 +5,27 @@ mixin MatchElementsExerciseEvaluatorMixin
   Future<void> evaluateMatchElementsExercise(List<Match> matches) async {
     final state = _exerciseStateSignal.value;
     if (state is! MatchElementsExerciseState) {
+      _logger.e('Match-elements evaluation called for ${state.runtimeType}.');
       throw StateError(
         'The current exercise is not a match-elements exercise.',
       );
     }
     if (matches.length != state.input.matches.length) {
+      _logger.e(
+        'Match-elements submission count mismatch. '
+        'Expected: ${state.input.matches.length}; '
+        'received: ${matches.length}; exercise index: ${state.currentIndex}.',
+      );
       throw StateError(
         'Expected ${state.input.matches.length} matches, '
         'received ${matches.length}.',
       );
     }
+
+    _logger.d(
+      'Starting match-elements evaluation. '
+      'Exercise index: ${state.currentIndex}; matches: ${matches.length}.',
+    );
 
     final submissions = [
       for (var index = 0; index < matches.length; index++)
@@ -43,7 +54,13 @@ mixin MatchElementsExerciseEvaluatorMixin
       schema,
       _exerciseEvaluationSystemInstruction,
     )).valueOrStopExecution();
-    if (generated == null) return;
+    if (generated == null) {
+      _logger.w(
+        'Match-elements evaluation stopped without a result. '
+        'Exercise index: ${state.currentIndex}.',
+      );
+      return;
+    }
 
     final results = <MatchFeedback>[];
     for (var index = 0; index < generated.length; index++) {
@@ -62,8 +79,24 @@ mixin MatchElementsExerciseEvaluatorMixin
         );
       }
     }
+    final incorrectCount = results
+        .where((result) => result.explanation != null)
+        .length;
+    _logger.i(
+      'Match-elements evaluation completed. '
+      'Exercise index: ${state.currentIndex}; correct: '
+      '${results.length - incorrectCount}; incorrect: $incorrectCount.',
+    );
     if (identical(_exerciseStateSignal.value, state)) {
       _exerciseStateSignal.value = state.copyWith(answerResult: results);
+      _logger.d(
+        'Applied match-elements evaluation result to the current state.',
+      );
+    } else {
+      _logger.w(
+        'Discarded match-elements evaluation result because the exercise '
+        'state changed. Original index: ${state.currentIndex}.',
+      );
     }
   }
 }

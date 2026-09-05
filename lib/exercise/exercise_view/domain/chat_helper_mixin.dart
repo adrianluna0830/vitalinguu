@@ -46,14 +46,21 @@ mixin ChatHelperMixin on AIErrorRetryMixin, ExerciseViewModelStateMixin {
     _chatSessionId++;
     _messagesSignal.value = const [];
     _isTypingSignal.value = false;
+    _logger.i('Started chat helper session $_chatSessionId.');
   }
 
   Future<void> sendMessage(String message) async {
     final learnerMessage = message.trim();
     if (learnerMessage.isEmpty) {
+      _logger.w('Rejected an empty chat helper message.');
       throw ArgumentError.value(message, 'message', 'Cannot be empty.');
     }
-    if (_isTypingSignal.value) return;
+    if (_isTypingSignal.value) {
+      _logger.t(
+        'Skipped chat helper message because session $_chatSessionId is busy.',
+      );
+      return;
+    }
 
     final requestSessionId = _chatSessionId;
     final previousMessages = _messagesSignal.value;
@@ -63,6 +70,11 @@ mixin ChatHelperMixin on AIErrorRetryMixin, ExerciseViewModelStateMixin {
     ]);
     _messagesSignal.value = pendingMessages;
     _isTypingSignal.value = true;
+    _logger.d(
+      'Queued chat helper request. Session: $requestSessionId; '
+      'prior messages: ${previousMessages.length}; '
+      'message length: ${learnerMessage.length}.',
+    );
 
     final previousRequest = _chatRequestQueue;
     final requestCompleted = Completer<void>();
@@ -70,8 +82,15 @@ mixin ChatHelperMixin on AIErrorRetryMixin, ExerciseViewModelStateMixin {
 
     try {
       await previousRequest;
-      if (!_isCurrentChatRequest(requestSessionId, pendingMessages)) return;
+      if (!_isCurrentChatRequest(requestSessionId, pendingMessages)) {
+        _logger.t(
+          'Discarded queued chat helper request because its session or state '
+          'is no longer current. Session: $requestSessionId.',
+        );
+        return;
+      }
 
+      _logger.d('Sending chat helper request for session $requestSessionId.');
       final generated = (await generateChatResponse(
         _ai,
         _buildChatHelperPrompt(
@@ -82,22 +101,43 @@ mixin ChatHelperMixin on AIErrorRetryMixin, ExerciseViewModelStateMixin {
         _toAIChatMessages(previousMessages),
         _chatHelperSystemInstruction,
       )).valueOrStopExecution();
-      if (generated == null ||
-          !_isCurrentChatRequest(requestSessionId, pendingMessages)) {
+      if (generated == null) {
+        _logger.w(
+          'Chat helper request stopped without a result. '
+          'Session: $requestSessionId.',
+        );
+        return;
+      }
+      if (!_isCurrentChatRequest(requestSessionId, pendingMessages)) {
+        _logger.t(
+          'Discarded chat helper response because its session or state is no '
+          'longer current. Session: $requestSessionId.',
+        );
         return;
       }
 
       final botMessage = generated.trim();
-      if (botMessage.isEmpty) return;
+      if (botMessage.isEmpty) {
+        _logger.w(
+          'Chat helper returned an empty response. Session: $requestSessionId.',
+        );
+        return;
+      }
 
       _messagesSignal.value = List<ChatDialogMessage>.unmodifiable([
         ...pendingMessages,
         ChatDialogMessage(isUserMessage: false, message: botMessage),
       ]);
       _isTypingSignal.value = false;
+      _logger.i(
+        'Chat helper response applied. Session: $requestSessionId; '
+        'response length: ${botMessage.length}; '
+        'total messages: ${_messagesSignal.value.length}.',
+      );
     } finally {
       requestCompleted.complete();
       _stopChatTypingIfCurrent(requestSessionId, pendingMessages);
+      _logger.t('Released chat helper queue slot. Session: $requestSessionId.');
     }
   }
 
@@ -116,6 +156,9 @@ mixin ChatHelperMixin on AIErrorRetryMixin, ExerciseViewModelStateMixin {
   ) {
     if (_isCurrentChatRequest(requestSessionId, pendingMessages)) {
       _isTypingSignal.value = false;
+      _logger.d(
+        'Cleared chat helper typing state. Session: $requestSessionId.',
+      );
     }
   }
 }
